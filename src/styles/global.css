@@ -1,0 +1,240 @@
+/*
+ * Yahrah design tokens. A deliberately limited handheld-era palette,
+ * checked for WCAG AA contrast against its intended background.
+ * The full pixel UI kit lands in M1; this is the shell.
+ */
+
+:root {
+  /* Core palette - dusk over a woven land */
+  --ink: #0e1319;
+  --ink-2: #161d26;
+  --panel: #1b2430;
+  --panel-2: #243040;
+  --edge: #3d5068;
+  --paper: #e8e4d8;
+  --paper-dim: #b9b4a6;
+
+  /* Clan accents */
+  --akazora: #e8615a;
+  --aoyane: #5aa9e8;
+  --fujizome: #b07ae8;
+
+  /* Signals */
+  --good: #7bd88f;
+  --warn: #e8c35a;
+  --bad: #e8615a;
+
+  --font-ui: 'Press Start 2P', 'Courier New', monospace;
+  --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Adjustable text size hooks up in M1 */
+  --text-scale: 1;
+  --tap: 44px;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+img,
+canvas {
+  image-rendering: pixelated;
+}
+
+/* Every interactive thing is reachable by keyboard and visibly focused. */
+:focus-visible {
+  outline: 3px solid var(--warn);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- shell ---------------------------------------------------------------- */
+
+.shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+@media (min-width: 900px) {
+  .shell {
+    max-width: 720px;
+  }
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: calc(1.5rem * var(--text-scale));
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  margin: 0;
+  color: var(--paper);
+  text-shadow: 0 3px 0 var(--edge);
+}
+
+.subtitle {
+  font-family: var(--font-ui);
+  font-size: calc(0.6rem * var(--text-scale));
+  line-height: 1.8;
+  color: var(--warn);
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+.panel {
+  background: var(--panel);
+  border: 3px solid var(--edge);
+  border-radius: 2px;
+  padding: 1rem;
+  box-shadow: inset 0 0 0 3px var(--panel-2);
+}
+
+.panel h2 {
+  font-family: var(--font-ui);
+  font-size: calc(0.7rem * var(--text-scale));
+  line-height: 1.7;
+  margin: 0 0 0.75rem;
+  color: var(--warn);
+}
+
+.panel p {
+  margin: 0 0 0.75rem;
+  font-size: calc(0.95rem * var(--text-scale));
+  line-height: 1.65;
+  color: var(--paper);
+}
+
+.panel p:last-child {
+  margin-bottom: 0;
+}
+
+.vow {
+  margin: 0 0 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--edge);
+}
+
+.vow:last-child {
+  margin-bottom: 0;
+}
+
+.vow strong {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: calc(0.55rem * var(--text-scale));
+  line-height: 1.9;
+  color: var(--aoyane);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+.vow span {
+  font-size: calc(0.9rem * var(--text-scale));
+  line-height: 1.6;
+  color: var(--paper-dim);
+}
+
+.villages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.village {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: var(--tap);
+  padding: 0.6rem 0.75rem;
+  background: var(--ink-2);
+  border: 2px solid var(--edge);
+  border-radius: 2px;
+}
+
+.village-name {
+  font-family: var(--font-ui);
+  font-size: calc(0.6rem * var(--text-scale));
+  line-height: 1.7;
+  color: var(--paper);
+}
+
+.village-teaches {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: calc(0.8rem * var(--text-scale));
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+
+.badge {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: calc(0.45rem * var(--text-scale));
+  line-height: 1.6;
+  padding: 0.3rem 0.45rem;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.badge-open {
+  background: var(--good);
+  color: var(--ink);
+}
+
+.badge-planned {
+  background: var(--panel-2);
+  color: var(--paper-dim);
+  border: 1px solid var(--edge);
+}
+
+.footnote {
+  font-size: calc(0.8rem * var(--text-scale));
+  line-height: 1.6;
+  color: var(--paper-dim);
+  margin: 0;
+}

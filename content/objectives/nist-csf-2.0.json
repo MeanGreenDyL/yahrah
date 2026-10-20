@@ -1,0 +1,77 @@
+{
+  "framework": "nist-csf",
+  "version": "2.0",
+  "title": "NIST Cybersecurity Framework 2.0",
+  "verification": {
+    "status": "unverified-primary-source",
+    "needs_review": true,
+    "note": "Six Functions and 22 Category identifiers are corroborated across multiple independent sources, and the per-Function counts sum to 22 (one secondary source claims 23, which conflicts with its own per-Function breakdown). Category titles here follow the commonly published wording. NIST CSWP 29 could not be retrieved because the build environment's network policy blocks nist.gov and csrc.nist.gov. Re-verify Category titles and subcategory wording against the official publication.",
+    "checked_on": "2026-10-20"
+  },
+  "functions": [
+    {
+      "id": "GV",
+      "name": "Govern",
+      "summary": "The organization's cybersecurity risk management strategy, expectations and policy are established, communicated and monitored.",
+      "categories": [
+        { "id": "GV.OC", "name": "Organizational Context" },
+        { "id": "GV.RM", "name": "Risk Management Strategy" },
+        { "id": "GV.RR", "name": "Roles, Responsibilities, and Authorities" },
+        { "id": "GV.PO", "name": "Policy" },
+        { "id": "GV.OV", "name": "Oversight" },
+        { "id": "GV.SC", "name": "Cybersecurity Supply Chain Risk Management" }
+      ]
+    },
+    {
+      "id": "ID",
+      "name": "Identify",
+      "summary": "The organization's current cybersecurity risks are understood.",
+      "categories": [
+        { "id": "ID.AM", "name": "Asset Management" },
+        { "id": "ID.RA", "name": "Risk Assessment" },
+        { "id": "ID.IM", "name": "Improvement" }
+      ]
+    },
+    {
+      "id": "PR",
+      "name": "Protect",
+      "summary": "Safeguards to manage the organization's cybersecurity risks are used.",
+      "categories": [
+        { "id": "PR.AA", "name": "Identity Management, Authentication, and Access Control" },
+        { "id": "PR.AT", "name": "Awareness and Training" },
+        { "id": "PR.DS", "name": "Data Security" },
+        { "id": "PR.PS", "name": "Platform Security" },
+        { "id": "PR.IR", "name": "Technology Infrastructure Resilience" }
+      ]
+    },
+    {
+      "id": "DE",
+      "name": "Detect",
+      "summary": "Possible cybersecurity attacks and compromises are found and analyzed.",
+      "categories": [
+        { "id": "DE.CM", "name": "Continuous Monitoring" },
+        { "id": "DE.AE", "name": "Adverse Event Analysis" }
+      ]
+    },
+    {
+      "id": "RS",
+      "name": "Respond",
+      "summary": "Actions regarding a detected cybersecurity incident are taken.",
+      "categories": [
+        { "id": "RS.MA", "name": "Incident Management" },
+        { "id": "RS.AN", "name": "Incident Analysis" },
+        { "id": "RS.CO", "name": "Incident Response Reporting and Communication" },
+        { "id": "RS.MI", "name": "Incident Mitigation" }
+      ]
+    },
+    {
+      "id": "RC",
+      "name": "Recover",
+      "summary": "Assets and operations affected by a cybersecurity incident are restored.",
+      "categories": [
+        { "id": "RC.RP", "name": "Incident Recovery Plan Execution" },
+        { "id": "RC.CO", "name": "Incident Recovery Communication" }
+      ]
+    }
+  ]
+}

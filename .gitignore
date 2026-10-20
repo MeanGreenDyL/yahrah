@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+dev-dist
+coverage
+playwright-report
+test-results
+*.local
+.DS_Store
+.vite
+*.tsbuildinfo
+
+# Emitted JS next to a TS source is always a build artifact, never a source file.
+/vite.config.js
+/vitest.config.js
+/playwright.config.js
