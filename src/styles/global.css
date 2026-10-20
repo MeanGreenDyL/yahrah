@@ -659,3 +659,151 @@ canvas {
 .screen-centred .title-rank {
   margin-bottom: 0.5rem;
 }
+
+/* --- overworld ------------------------------------------------------------ */
+
+.overworld-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.overworld-frame {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+  background: var(--panel);
+  border: 3px solid var(--edge);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 3px var(--panel-2);
+}
+
+.overworld-frame canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 352px;
+}
+
+.dpad {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin: 0.25rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.dpad-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  font-size: 1.1rem;
+  color: var(--paper);
+  background: var(--panel-2);
+  border: 3px solid var(--edge);
+  border-radius: 2px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.dpad-btn:active {
+  background: var(--warn);
+  color: var(--ink);
+}
+
+.dpad-up {
+  grid-area: 1 / 2;
+}
+.dpad-left {
+  grid-area: 2 / 1;
+}
+.dpad-right {
+  grid-area: 2 / 3;
+}
+.dpad-down {
+  grid-area: 3 / 2;
+}
+
+.dpad-hub {
+  grid-area: 2 / 2;
+  background: var(--panel);
+  border: 3px solid var(--edge);
+}
+
+/* --- dashboard ------------------------------------------------------------ */
+
+.readiness {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.readiness-score {
+  font-family: var(--font-ui);
+  font-size: calc(2rem * var(--text-scale));
+  line-height: 1.3;
+  color: var(--warn);
+}
+
+.readiness-of {
+  font-family: var(--font-ui);
+  font-size: calc(0.6rem * var(--text-scale));
+  color: var(--paper-dim);
+}
+
+.plain-list .menu-hint {
+  display: block;
+  margin-top: 0.2rem;
+}
+
+code {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.9em;
+  color: var(--warn);
+}
+
+/* --- badges --------------------------------------------------------------- */
+
+.badges {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.badge-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: calc(0.92rem * var(--text-scale));
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+
+.badge-row strong {
+  display: block;
+  color: var(--paper-dim);
+}
+
+.badge-earned strong {
+  color: var(--paper);
+}
+
+.badge-mark {
+  flex: none;
+  color: var(--edge);
+  font-size: 1.1em;
+}
+
+.badge-earned .badge-mark {
+  color: var(--warn);
+}

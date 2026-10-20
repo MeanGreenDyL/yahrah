@@ -49,11 +49,16 @@ export function HomeScreen() {
             hint: v.status === 'open' ? v.teaches : 'Sealed for now',
             disabled: v.status !== 'open',
           }))}
-          onSelect={() => {
-            // Village entry arrives with the overworld in M2.
-          }}
+          onSelect={() => go('overworld')}
         />
       </Panel>
+
+      <div className="button-row">
+        <Button onClick={() => go('overworld')}>Travel</Button>
+        <Button variant="ghost" onClick={() => go('dashboard')}>
+          Progress
+        </Button>
+      </div>
 
       <div className="button-row">
         <Button variant="ghost" onClick={() => go('codex')}>

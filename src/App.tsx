@@ -5,6 +5,8 @@ import { VowsScreen } from '@/screens/VowsScreen'
 import { HomeScreen } from '@/screens/HomeScreen'
 import { SettingsScreen } from '@/screens/SettingsScreen'
 import { CodexScreen } from '@/screens/CodexScreen'
+import { OverworldScreen } from '@/screens/OverworldScreen'
+import { DashboardScreen } from '@/screens/DashboardScreen'
 import { Button } from '@/ui/Button'
 import { Panel } from '@/ui/Panel'
 
@@ -61,6 +63,8 @@ export function App() {
       {screen === 'home' && <HomeScreen />}
       {screen === 'settings' && <SettingsScreen />}
       {screen === 'codex' && <CodexScreen />}
+      {screen === 'overworld' && <OverworldScreen />}
+      {screen === 'dashboard' && <DashboardScreen />}
     </main>
   )
 }

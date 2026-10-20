@@ -106,3 +106,37 @@ If a stored save will not parse, the app shows what went wrong and offers to sta
 fresh, rather than overwriting it. A save is the only thing a player can lose, and the
 file may still be recoverable by hand. `load()` returns a `corrupt` result instead of
 throwing, so the decision belongs to the UI rather than the storage layer.
+
+## D13 — One mastery record, keyed by any curriculum reference
+
+`save.mastery` is keyed by curriculum id, and Security+ objective ids (`SP.1.2`) and
+CSF category ids (`PR.AA`) have distinct shapes that cannot collide. Both therefore
+live in the same record, and each framework reads back only its own ids.
+
+The alternative was a second record plus a save migration, or an editorial mapping
+from each Security+ objective to CSF categories. That mapping would have been *mine*,
+not CompTIA's or NIST's, and inventing it would have broken the honesty rule. Instead
+a question carries both tags and an answer records against both.
+
+## D14 — An untouched objective counts as zero, not as absent
+
+Domain mastery averages across *every* objective in the domain, including ones never
+attempted. Otherwise one perfect objective would show a domain as mastered. The bar
+measures coverage and accuracy together, which is what "am I ready?" actually asks.
+Weak areas, by contrast, exclude untouched objectives: "you haven't started this" is a
+different signal from "you keep getting this wrong", and untouched coverage is
+reported separately.
+
+## D15 — Map reachability is a test, not an eyeball
+
+`reachableFrom()` runs a breadth-first search from the player's start and the test
+suite asserts every village gate is in it. The first map draft looked fine and had
+Hakumura walled in with no door; the test caught it before the renderer existed. Any
+future map edit is checked the same way.
+
+## D16 — Badges are predicates, recomputed from the save
+
+Each badge is a pure function of the save rather than a flag written at the moment it
+is earned. Awarding is therefore idempotent, the stored list can never drift from what
+the player has actually done, and a badge added later is granted retroactively to
+anyone who already qualifies.

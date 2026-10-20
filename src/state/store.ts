@@ -8,8 +8,9 @@ import {
   type Settings,
 } from '@/engine/save'
 import * as storage from '@/engine/storage'
+import { syncBadges } from '@/engine/badges'
 
-export type Screen = 'title' | 'vows' | 'home' | 'settings' | 'codex'
+export type Screen = 'title' | 'vows' | 'home' | 'settings' | 'codex' | 'overworld' | 'dashboard'
 
 export type BootStatus = 'booting' | 'ready' | 'corrupt'
 
@@ -90,7 +91,8 @@ export const useGame = create<State>((set, get) => ({
   },
 
   acceptVows() {
-    const save = { ...get().save, profile: { ...get().save.profile, vowsAccepted: true } }
+    const withVows = { ...get().save, profile: { ...get().save.profile, vowsAccepted: true } }
+    const { save } = syncBadges(withVows)
     set({ save, screen: 'home' })
     schedulePersist(save)
   },
@@ -105,8 +107,9 @@ export const useGame = create<State>((set, get) => ({
   },
 
   markPlayedToday() {
-    const save = touchStreak(get().save, today())
-    if (save === get().save) return
+    const streaked = touchStreak(get().save, today())
+    if (streaked === get().save) return
+    const { save } = syncBadges(streaked)
     set({ save })
     schedulePersist(save)
   },
