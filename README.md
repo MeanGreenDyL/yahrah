@@ -90,10 +90,14 @@ responsible disclosure.
 
 ## Status
 
-**M0 and M1 complete.** Scaffold, curriculum spine, content validator and CI; pixel UI
-kit, chiptune audio, PWA, and a save system with export/import and migrations.
+**M0, M1 and M2 complete.** Scaffold, curriculum spine, content validator and CI;
+pixel UI kit, chiptune audio, PWA, and a save system with export/import and
+migrations; overworld, progress dashboard and badges.
 
-Playable now: title screen, the Three Vows, home with XP and streak, settings
-(audio/motion/text size/save management) and the Codex. Villages open up in M2-M5.
+Playable now: title screen, the Three Vows, home with XP and streak, a walkable
+overworld with seven village gates, a progress dashboard (mastery by Security+ domain
+and by CSF 2.0 Function, weak areas, exam readiness), badges, settings and the Codex.
+
+Lessons, battles and labs arrive in M3-M5.
 
 See [`docs/ROADMAP.md`](docs/ROADMAP.md).

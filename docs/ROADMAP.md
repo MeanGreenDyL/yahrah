@@ -12,10 +12,12 @@
   versioned migrations, JSON export/import, corrupt-save recovery, XP curve, streaks,
   and the Three Vows gate. Title, Vows, Home, Settings and Codex screens.
 
+- **M2 — Overworld and progression.** 24x24 tile overworld with a thumb D-pad and
+  arrow/WASD control, seven village gates (reachability proven by test), progress
+  dashboard with mastery per Security+ domain and per CSF 2.0 Function, weak-area
+  ranking, syllabus coverage, a weighted exam-readiness score, and eight badges.
+
 ## Next
-- **M2 — Overworld and progression.** Tile overworld with touch and keyboard control,
-  village gates, progress dashboard (mastery per Security+ domain and CSF Function,
-  weak areas, exam-readiness score), XP curve, streaks, badges.
 - **M3 — Battle engine and spaced repetition.** Turn-based Kagemono encounters with
   Mamori loadouts and type effectiveness, SM-2-style scheduler, missed concepts
   returning as wild encounters, explanations after every answer.
