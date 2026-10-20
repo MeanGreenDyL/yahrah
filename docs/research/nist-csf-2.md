@@ -1,7 +1,9 @@
 # NIST Cybersecurity Framework 2.0
 
-Researched 2026-10-20. **No primary source retrieved** — `nist.gov` and `csrc.nist.gov`
-are blocked by the build environment's network policy.
+Researched 2026-10-20. Direct HTTP to `nist.gov` and `csrc.nist.gov` is blocked by the
+build environment's network policy, so NIST's documents were reached by **searching
+those domains** rather than fetching them. That is enough to confirm identifiers and
+names; it is not enough for full subcategory text.
 
 ## Structure
 
@@ -31,12 +33,18 @@ sixth activity.
 | RS | RS.MA Incident Management · RS.AN Incident Analysis · RS.CO Incident Response Reporting and Communication · RS.MI Incident Mitigation |
 | RC | RC.RP Incident Recovery Plan Execution · RC.CO Incident Recovery Communication |
 
-## The one disagreement
+## The 22-vs-23 question: settled
 
-One secondary source titles its table "6 Functions and 23 Categories" while its own
-per-Function rows sum to 22. Every other source checked gives 22, and the identifier
-list above sums to 22. **The spine records 22 and flags this for primary-source
-confirmation.**
+**Resolved 2026-10-20 against NIST's own sources.** A search restricted to `nist.gov`,
+`csrc.nist.gov` and `nvlpubs.nist.gov` returned the CSF 2.0 Core table from NIST CSWP 29
+and the NIST cyberframework FAQ. Both confirm **22 Categories**, with exactly the
+identifiers and names recorded above.
+
+The secondary source titling its table "23 Categories" was simply wrong — its own
+per-Function rows summed to 22.
+
+NIST's FAQ also confirms which Categories are new in 2.0: **GV.PO**, **GV.OV**,
+**PR.PS** and **ID.IM**.
 
 Subcategory count is reported as ~106. Individual subcategory wording has **not** been
 captured and must come from the official publication before any content quotes it.
@@ -54,14 +62,17 @@ captured and must come from the official publication before any content quotes i
 
 | Claim | Confidence |
 |---|---|
-| Six Functions and their names | High |
-| The 22 category identifiers | Medium-high — consistent, and the per-Function counts sum correctly |
-| Category titles as worded above | **Medium — needs primary source** |
-| 22 vs 23 total | **Medium — one source disagrees with itself** |
-| Subcategory wording | **Not captured** |
+| Six Functions and their names | **High — confirmed on nist.gov** |
+| The 22 category identifiers | **High — confirmed against the CSF 2.0 Core table** |
+| Category titles as worded above | **High — match NIST's own table** |
+| 22 vs 23 total | **Settled: 22** |
+| Subcategory identifiers and wording | **Still not captured** — needs a full read of CSWP 29 |
 
 ## Sources
 
+- https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf (the CSF 2.0 publication)
+- https://www.nist.gov/system/files/documents/2024/03/25/The_NIST_CSF_2-0_Core_With_Withdrawn_CSF_1-1_Elements.pdf
+- https://www.nist.gov/cyberframework/faqs
 - https://www.saltycloud.com/blog/nist-csf-controls/
 - https://www.saltycloud.com/blog/nist-csf-functions-and-tiers/
 - https://www.resiplan.eu/en/blog/nist-csf-categories-table (the 23-category outlier)

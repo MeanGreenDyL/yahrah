@@ -51,7 +51,18 @@ export const curriculumTags = z.object({
 // ---------------------------------------------------------------------------
 
 const verification = z.object({
-  status: z.enum(['verified-primary-source', 'unverified-primary-source']),
+  /**
+   * How well this spine is sourced.
+   *  - verified-primary-source: the official document itself was read.
+   *  - corroborated-official-source: confirmed against the publisher's own
+   *    site or documents, but the full source was not retrieved.
+   *  - unverified-primary-source: only third-party sources were available.
+   */
+  status: z.enum([
+    'verified-primary-source',
+    'corroborated-official-source',
+    'unverified-primary-source',
+  ]),
   needs_review: z.boolean().optional(),
   note: z.string().min(1),
   checked_on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

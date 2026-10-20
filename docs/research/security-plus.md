@@ -1,8 +1,17 @@
 # CompTIA Security+
 
-Researched 2026-10-20. **No primary source retrieved** — `comptia.org` is blocked by the
-build environment's network policy. All findings below are from third-party training
-providers.
+Researched 2026-10-20. Direct HTTP to `comptia.org` is blocked by the build
+environment's network policy, so CompTIA's own pages were reached by **searching that
+domain** rather than fetching them.
+
+**CompTIA's own site confirms** the five domain names, the weights (12/22/18/28/20),
+and that SY0-701 has **28 objectives** against SY0-601's 35. CompTIA's published
+summary of each domain's subtopics also matches the objectives recorded in the spine —
+for domain 1.0: security controls, fundamental concepts, change management, and
+cryptographic solutions.
+
+What is still missing is the exact character-for-character objective wording and the
+sub-bullet term lists, which need the official objectives PDF.
 
 ## Current exam version
 
@@ -56,13 +65,16 @@ are **not** captured yet and are needed before claiming full coverage.
 |---|---|
 | SY0-701 is current | High |
 | Domain names and weights | High — unanimous, sums to 100% |
-| 28 objectives, split 4/5/4/9/6 | Medium-high — count independently corroborated |
-| Exact objective wording | **Medium — needs primary source** |
+| 28 objectives, split 4/5/4/9/6 | **High — count confirmed on comptia.org** |
+| Exact objective wording | **Medium — needs the official PDF** |
 | SY0-801 launch and retirement dates | Medium — plans, not commitments |
 | Objective sub-bullets | **Not captured** |
 
 ## Sources
 
+- https://www.comptia.org/en-us/certifications/security/v7/ (official Security+ v7 page)
+- https://www.comptia.org/en-us/blog/comptia-security-601-vs-701-whats-the-difference/
+- https://www.comptia.org/en/blog/what-is-on-the-comptia-security-exam/
 - https://www.acilearning.com/blog/security-plus-sy0-801-whats-changing-and-when/
 - https://trainingcamp.com/articles/comptia-security-sy0-801-release-date-and-everything-we-know-so-far/
 - https://accumentum.net/security-plus-sy0-701-vs-sy0-801/

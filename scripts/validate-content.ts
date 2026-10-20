@@ -351,8 +351,12 @@ for (const [label, parsed] of [
   ['Security+', spParsed] as const,
   ['NIST CSF 2.0', csfParsed] as const,
 ]) {
-  if (parsed.success && parsed.data.verification.status === 'unverified-primary-source') {
-    notes.push(`${label} spine is NOT primary-source verified (${parsed.data.verification.checked_on})`)
+  if (!parsed.success) continue
+  const { status, checked_on } = parsed.data.verification
+  if (status === 'unverified-primary-source') {
+    notes.push(`${label} spine rests on third-party sources only (${checked_on})`)
+  } else if (status === 'corroborated-official-source') {
+    notes.push(`${label} spine corroborated against the publisher's own sources (${checked_on})`)
   }
 }
 

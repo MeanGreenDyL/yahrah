@@ -52,22 +52,51 @@ controls.
 
 *Confidence: high.*
 
-## ISO/IEC 27001 and NIST SP 800-53
+## NIST SP 800 series
 
-**Not covered by the searches run.** From general knowledge, ISO/IEC 27001:2022 is the
-current edition with a 2024 amendment on climate change, and NIST SP 800-53 Rev 5 is the
-current major revision with point releases since 2023.
+Researched 2026-10-20 against NIST's own domains (`nist.gov`, `csrc.nist.gov`,
+`nvlpubs.nist.gov`). Direct HTTP to those hosts is still blocked by the build
+environment, so these come from search of NIST-hosted documents rather than a full
+read of each PDF.
 
-*Confidence: low — this is recall, not research. Must be verified before any content
-cites a revision number.*
+| Publication | Current version | Notes |
+|---|---|---|
+| **SP 800-61** | **Revision 3**, finalised **3 April 2025** | **Revision 2 is withdrawn**, superseded in its entirety. Rev 3 is framed as a **CSF 2.0 Community Profile**: its recommendations are organised by CSF 2.0 Function, and it states all six Functions have a role in incident response. |
+| **SP 800-53** | **Rev 5, Release 5.2.0**, 27 August 2025 | Added controls focused on software updates and patching. The CSRC downloads page still labels 5.1 current and appears stale. No Release 6.0.0 yet. |
+| **SP 800-30** | **Revision 1**, September 2012 | Still current. Three-step process: prepare for, conduct, and maintain an assessment. |
+| **SP 800-207** | Final, 2020 | Companion **SP 800-207A** shifts focus from network-based controls to identity for cloud-native applications. |
+
+> **This changes a planned design.** SP 800-61 Rev 3 being a CSF 2.0 Community Profile
+> means the incident-response content in Yoimura should be organised by CSF Function,
+> not by the old four-phase Rev 2 lifecycle (Preparation / Detection and Analysis /
+> Containment, Eradication and Recovery / Post-Incident Activity). Teaching the Rev 2
+> lifecycle as current would be teaching a withdrawn document.
+
+*Confidence: high on versions and dates. Medium on the detail of Rev 3's structure —
+the full PDF has not been read.*
+
+## ISO/IEC 27001
+
+**Still not researched.** From general knowledge, ISO/IEC 27001:2022 is the current
+edition with a 2024 amendment on climate change. *Confidence: low — this is recall,
+not research, and no content may cite it until checked.*
 
 ## Still to research
 
-- NIST SP 800-61 (incident handling) current revision — **Rev 3 status unconfirmed**
-- NIST SP 800-30 (risk assessment), 800-207 (Zero Trust) current revisions
 - MITRE D3FEND current version
 - OWASP API Security Top 10 current edition
+- ISO/IEC 27001 current edition and amendment status
 - Current and emerging tooling (needed for the Dougu tool cards)
+
+## Sources (NIST, added 2026-10-20)
+
+- https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf
+- https://www.nist.gov/news-events/news/2025/04/nist-revises-sp-800-61-incident-response-recommendations-and-considerations
+- https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
+- https://csrc.nist.gov/csrc/media/Projects/risk-management/800-53%20Comment%20Site/SP800-53-r5.2.0-changes.pdf
+- https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-30r1.pdf
+- https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf
+- https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207A.pdf
 
 ## Sources
 
