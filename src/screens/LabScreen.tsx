@@ -4,6 +4,7 @@ import { Panel } from '@/ui/Panel'
 import { Button } from '@/ui/Button'
 import { DialogBox } from '@/ui/DialogBox'
 import { LAB_BY_ID } from '@/content'
+import { shuffleSeeded } from '@/engine/shuffle'
 import type { Lab, LogsLab, PhishingLab, TerminalLab } from '@/content/schemas'
 import {
   isComplete,
@@ -207,14 +208,104 @@ function TerminalLabView({ lab, onDone }: { lab: TerminalLab; onDone: () => void
 // ---------------------------------------------------------------------------
 
 function LogsLabView({ lab, onDone }: { lab: LogsLab; onDone: () => void }) {
+  const { answerLessonCheck } = useGame()
   const [state, setState] = useState<LogsState>(() => startLogs(lab))
+  const [submitted, setSubmitted] = useState(false)
+  const [chosen, setChosen] = useState<string | null>(null)
   const rows = visibleRows(lab, state)
   const score = scoreLogs(lab, state)
+
+  // Once findings are in, the lab's own question names the pattern they found.
+  if (submitted) {
+    const question = lab.question
+    const answered = chosen !== null
+    const correct = question.type === 'single' && chosen === question.answer
+
+    return (
+      <div className="screen">
+        <h1 className="screen-title">{lab.title}</h1>
+
+        <Panel id="score" tone={score.perfect ? 'good' : 'warn'} title="Your findings">
+          <p className="footnote">
+            {score.hits} of {score.total} attack entries flagged
+            {score.falsePositives > 0 && `, ${score.falsePositives} benign entr${score.falsePositives === 1 ? 'y' : 'ies'} wrongly flagged`}
+            {score.misses > 0 && `, ${score.misses} missed`}.
+          </p>
+          {score.falsePositives > 0 && (
+            <p className="footnote">
+              A false positive costs real time in a real queue. Being precise matters as much as
+              being thorough.
+            </p>
+          )}
+        </Panel>
+
+        <Panel id="log-question">
+          <p className="question-prompt">{question.prompt}</p>
+        </Panel>
+
+        {question.type === 'single' && !answered && (
+          <ul className="choices">
+            {shuffleSeeded(question.choices, question.id).map((choice) => (
+              <li key={choice.id}>
+                <button
+                  type="button"
+                  className="choice"
+                  onClick={() => {
+                    setChosen(choice.id)
+                    answerLessonCheck(question.id, choice.id === question.answer)
+                  }}
+                >
+                  {choice.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {question.type === 'single' && answered && (
+          <>
+            <Panel
+              id="log-verdict"
+              tone={correct ? 'good' : 'warn'}
+              title={correct ? 'Correct' : 'Not quite'}
+            >
+              <p>{question.explanation}</p>
+            </Panel>
+            <Panel id="log-choices" title="Each answer">
+              <ul className="plain-list">
+                {question.choices.map((choice) => (
+                  <li
+                    key={choice.id}
+                    className={
+                      choice.id === question.answer
+                        ? 'choice-review choice-right'
+                        : choice.id === chosen
+                          ? 'choice-review choice-chosen'
+                          : 'choice-review'
+                    }
+                  >
+                    <strong>{choice.text}</strong>
+                    <span className="menu-hint">{choice.why}</span>
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          </>
+        )}
+
+        {(answered || question.type !== 'single') && (
+          <Button full onClick={onDone}>
+            Continue
+          </Button>
+        )}
+      </div>
+    )
+  }
 
   return (
     <LabFrame
       lab={lab}
-      onFinish={onDone}
+      onFinish={() => setSubmitted(true)}
       finishLabel="Submit findings"
       canFinish={state.flagged.length > 0}
     >

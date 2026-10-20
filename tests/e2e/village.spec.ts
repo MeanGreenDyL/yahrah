@@ -10,6 +10,12 @@ type Q = { id: string; prompt: string; answer: string; choices: Choice[] }
 const QUESTIONS: Q[] = read('questions/hakumura.json')
 const ZONE = read('zones/hakumura.json')[0]
 
+/** Resolve the right answer for a question embedded in a lab. */
+function correctTextFor2(prompt: string, q: Q): string {
+  if (q.prompt.trim() !== prompt.trim()) throw new Error(`Unexpected lab question: ${prompt}`)
+  return q.choices.find((c) => c.id === q.answer)!.text
+}
+
 function correctTextFor(prompt: string): string {
   const q = QUESTIONS.find((x) => x.prompt.trim() === prompt.trim())
   if (!q) throw new Error(`No question matches prompt: ${prompt}`)
@@ -177,13 +183,20 @@ test.describe('Hakumura', () => {
           }
           await page.getByRole('button', { name: 'File the triage report' }).click()
         } else {
-          const rows = read('labs/hakumura-logs.json')[0].rows.filter((r: { malicious: boolean }) => r.malicious)
-          for (const row of rows) {
-            await page.locator(`input[type="checkbox"]`).nth(
-              read('labs/hakumura-logs.json')[0].rows.findIndex((r: { id: string }) => r.id === row.id),
-            ).check()
+          const all = read('labs/hakumura-logs.json')[0]
+          for (const row of all.rows.filter((r: { malicious: boolean }) => r.malicious)) {
+            await page
+              .locator('input[type="checkbox"]')
+              .nth(all.rows.findIndex((r: { id: string }) => r.id === row.id))
+              .check()
           }
           await page.getByRole('button', { name: 'Submit findings' }).click()
+
+          // The lab's own question names the pattern that was just found.
+          await expect(page.getByRole('heading', { name: 'Your findings' })).toBeVisible()
+          const prompt = (await page.locator('.question-prompt').textContent())!
+          await page.locator('.choice', { hasText: correctTextFor2(prompt, all.question) }).first().click()
+          await page.getByRole('button', { name: 'Continue' }).click()
         }
         await expect(page.getByRole('heading', { name: 'Debrief' })).toBeVisible()
         await page.getByRole('button', { name: 'Continue' }).click()
