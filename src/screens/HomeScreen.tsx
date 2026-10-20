@@ -1,0 +1,68 @@
+import { useEffect } from 'react'
+import { useGame } from '@/state/store'
+import { Panel } from '@/ui/Panel'
+import { Meter } from '@/ui/Meter'
+import { Menu } from '@/ui/Menu'
+import { Button } from '@/ui/Button'
+import { VILLAGES, rankForLevel } from '@/world'
+import { xpIntoLevel, xpForNextLevel } from '@/engine/progression'
+
+export function HomeScreen() {
+  const { save, go, markPlayedToday } = useGame()
+  const rank = rankForLevel(save.profile.level)
+
+  // Opening the home screen counts as showing up today.
+  useEffect(() => {
+    markPlayedToday()
+  }, [markPlayedToday])
+
+  return (
+    <div className="screen">
+      <header className="home-header">
+        <div>
+          <h1 className="screen-title">{save.profile.name}</h1>
+          <p className="subtitle">
+            {rank.name} <span className="gloss">({rank.gloss})</span>
+          </p>
+        </div>
+        <div className="streak" title="Days in a row">
+          <span className="streak-count">{save.streak.current}</span>
+          <span className="streak-label">day streak</span>
+        </div>
+      </header>
+
+      <Panel id="xp">
+        <Meter
+          label={`Level ${save.profile.level}`}
+          value={xpIntoLevel(save.profile.xp)}
+          max={xpForNextLevel(save.profile.level)}
+          tone="xp"
+        />
+      </Panel>
+
+      <Panel id="villages" title="The Seven Villages">
+        <Menu
+          label="Villages"
+          items={VILLAGES.map((v) => ({
+            id: v.id,
+            label: v.name,
+            hint: v.status === 'open' ? v.teaches : 'Sealed for now',
+            disabled: v.status !== 'open',
+          }))}
+          onSelect={() => {
+            // Village entry arrives with the overworld in M2.
+          }}
+        />
+      </Panel>
+
+      <div className="button-row">
+        <Button variant="ghost" onClick={() => go('codex')}>
+          Codex
+        </Button>
+        <Button variant="ghost" onClick={() => go('settings')}>
+          Settings
+        </Button>
+      </div>
+    </div>
+  )
+}

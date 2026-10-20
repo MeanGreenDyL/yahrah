@@ -6,11 +6,13 @@
   CSF 2.0 objective spines, zod content schemas, `validate-content` with referential
   integrity and safety checks, generated PWA icons, research notes, CI and Pages deploy.
 
-## Next
+- **M1 — Design system, shell, PWA, save.** Pixel UI kit (Panel, Button, Menu, Meter,
+  DialogBox with typewriter text, canvas Sprite renderer), self-hosted fonts, chiptune
+  engine (silent until explicitly enabled), IndexedDB save with localStorage fallback,
+  versioned migrations, JSON export/import, corrupt-save recovery, XP curve, streaks,
+  and the Three Vows gate. Title, Vows, Home, Settings and Codex screens.
 
-- **M1 — Design system, shell, PWA, save.** Pixel UI kit, typewriter dialog box, menu
-  and inventory frames, screen transitions, canvas sprite renderer, chiptune engine
-  (muted by default), IndexedDB save with versioned migrations and JSON export/import.
+## Next
 - **M2 — Overworld and progression.** Tile overworld with touch and keyboard control,
   village gates, progress dashboard (mastery per Security+ domain and CSF Function,
   weak areas, exam-readiness score), XP curve, streaks, badges.

@@ -1,1 +1,1 @@
-// Vitest global setup. Kept deliberately small.
+import '@testing-library/jest-dom/vitest'

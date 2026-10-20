@@ -90,5 +90,10 @@ responsible disclosure.
 
 ## Status
 
-M0 complete: scaffold, curriculum spine, content schema and validator, CI.
+**M0 and M1 complete.** Scaffold, curriculum spine, content validator and CI; pixel UI
+kit, chiptune audio, PWA, and a save system with export/import and migrations.
+
+Playable now: title screen, the Three Vows, home with XP and streak, settings
+(audio/motion/text size/save management) and the Codex. Villages open up in M2-M5.
+
 See [`docs/ROADMAP.md`](docs/ROADMAP.md).

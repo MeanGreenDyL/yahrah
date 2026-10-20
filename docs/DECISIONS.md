@@ -71,3 +71,38 @@ Agreed with Dylan: public repo, GitHub Pages, Actions-based deploy. Public is re
 because Pages on a private repo needs a paid plan, and a learning game has nothing
 sensitive in it. `base` is `/yahrah/`, overridable via `VITE_BASE` for root-domain hosts
 if we ever move to Cloudflare Pages or Netlify.
+
+## D9 — Fonts come from npm, not a font CDN
+
+`@fontsource/press-start-2p` and `@fontsource/atkinson-hyperlegible` are installed as
+dependencies and bundled.
+
+Two reasons. First, the build environment's network policy blocks Google Fonts, so
+fetching them at build time was not an option. Second, and more durably: a PWA that
+reaches a CDN for fonts is not offline-capable, and Yahrah makes no network calls at
+runtime by design. Bundling is the correct answer regardless of the policy.
+
+## D10 — One menu per screen owns the keyboard
+
+`Menu` takes an `active` prop (default true). Only the active menu binds global arrow
+keys and renders a cursor.
+
+Found by reviewing a screenshot: the home screen had two menus, both showing a
+selected row, and a single arrow press moved both cursors at once. Rather than special-
+case it, the home screen now has one keyboard-owning menu and demotes Codex/Settings
+to ordinary buttons, which stay reachable by Tab.
+
+## D11 — The menu cursor lives in a ref, not just state
+
+Two keypresses inside one animation frame both read React state from before the
+re-render, so pressing Down-then-Enter quickly selected the *previous* item. The cursor
+is now mirrored into a ref that the keydown handler reads, with state kept only for
+rendering. Covered by a unit test and an e2e test that dispatches both events
+synchronously.
+
+## D12 — A corrupt save is reported, never silently replaced
+
+If a stored save will not parse, the app shows what went wrong and offers to start
+fresh, rather than overwriting it. A save is the only thing a player can lose, and the
+file may still be recoverable by hand. `load()` returns a `corrupt` result instead of
+throwing, so the decision belongs to the UI rather than the storage layer.
