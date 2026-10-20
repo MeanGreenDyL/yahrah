@@ -66,12 +66,16 @@ const verification = z.object({
   needs_review: z.boolean().optional(),
   note: z.string().min(1),
   checked_on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  /** The document the spine was read from, when there is one. */
+  source: sourceRef.optional(),
 })
 
 export const securityPlusFrameworkSchema = z.object({
   framework: z.literal('comptia-security-plus'),
   version: z.string().min(1),
   title: z.string().min(1),
+  /** The revision of CompTIA's objectives document this was read from. */
+  objectives_document_version: z.string().min(1).optional(),
   verification,
   successor: z
     .object({
@@ -119,6 +123,16 @@ export const csfFrameworkSchema = z.object({
             z.object({
               id: csfRefId,
               name: z.string().min(1),
+              summary: z.string().min(1),
+              /** Verbatim from NIST's CSF 2.0 Core export. */
+              subcategories: z
+                .array(
+                  z.object({
+                    id: z.string().regex(/^(GV|ID|PR|DE|RS|RC)\.[A-Z]{2}-\d{2}$/),
+                    text: z.string().min(1),
+                  }),
+                )
+                .min(1),
             }),
           )
           .min(1),

@@ -233,3 +233,26 @@ surface it borders (ink, ink-2, panel, panel-2), because a border sits between t
 colours and must be visible against both. A unit test now computes the contrast ratio
 from the stylesheet tokens for every foreground/background pair in the design system,
 so a future palette change cannot quietly regress it.
+
+## D25 — The spines are generated, not transcribed, where a machine-readable source exists
+
+`content/objectives/nist-csf-2.0.json` is produced by a script from NIST's own CPRT
+export of the CSF 2.0 Core, not typed out from the PDF. 106 subcategories transcribed by
+hand is 106 chances to introduce an error into a curriculum that is supposed to be
+authoritative.
+
+CompTIA publishes no equivalent machine-readable objectives file, so that spine was
+checked statement-by-statement against the official PDF instead — all 28 match. Its
+sub-bullet term lists are deliberately transcribed per village, from the page they came
+from, rather than in bulk.
+
+## D26 — NIST's subcategory numbering has gaps, and the validator was wrong first
+
+A rule requiring subcategories to be numbered `01..n` contiguously seemed obviously
+right and failed immediately on the real NIST data: `ID.AM` runs 01-05, 07, 08 and
+`PR.DS` runs 01, 02, 10, 11, because withdrawn 1.1 subcategories kept their numbers
+rather than being renumbered.
+
+The data was authentic and the assumption was not. The rule now checks uniqueness,
+ownership and ascending order. Worth recording because the failure mode — a plausible
+invariant that quietly contradicts the source of truth — is easy to repeat.

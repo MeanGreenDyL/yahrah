@@ -1,8 +1,26 @@
 # CompTIA Security+
 
-Researched 2026-10-20. Direct HTTP to `comptia.org` is blocked by the build
-environment's network policy, so CompTIA's own pages were reached by **searching that
-domain** rather than fetching them.
+**Verified against the primary source, 2026-10-20.**
+
+Read directly from CompTIA's official *CompTIA Security+ Certification Exam Objectives*,
+Exam Number **SY0-701**, **Objectives Version 5.0** (copyright 2023), supplied as a file.
+
+All five domain names, the weights (12/22/18/28/20) and **all 28 objective statements**
+were checked character-for-character against that document. **Every one matches.**
+
+The document also confirms: maximum 90 questions, 90 minutes, multiple-choice and
+performance-based, recommended two years of IT administration experience with a security
+focus.
+
+### Term lists
+
+Each objective in the PDF carries a bulleted list of the technologies, processes and
+tasks it covers. These are transcribed into content **as each village is built**, from
+the page they came from, rather than bulk-transcribed now — bulk transcription from page
+images is exactly where errors creep in, and the honesty rule is worth more than speed.
+
+CompTIA also notes the bulleted lists are not exhaustive: other examples may appear on
+the exam.
 
 **CompTIA's own site confirms** the five domain names, the weights (12/22/18/28/20),
 and that SY0-701 has **28 objectives** against SY0-601's 35. CompTIA's published

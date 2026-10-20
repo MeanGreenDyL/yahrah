@@ -116,20 +116,31 @@ export function DashboardScreen() {
         </ul>
       </Panel>
 
-      {CURRICULUM_NEEDS_REVIEW && (
+      {CURRICULUM_NEEDS_REVIEW ? (
         <Panel id="review" tone="warn" title="How this curriculum is sourced">
           <p className="footnote">
-            The {SECURITY_PLUS.version} domains, weights and objective count are confirmed against
-            CompTIA's own site. The {CSF.version} Functions and all {CSF.functions.reduce(
-              (a, f) => a + f.categories.length,
-              0,
-            )}{' '}
-            Categories are confirmed against NIST's own published Core.
+            Parts of this curriculum have not been checked against the official documents yet.
+            Anything resting on them is flagged in the content. See <code>docs/research/</code>.
+          </p>
+        </Panel>
+      ) : (
+        <Panel id="review" tone="good" title="How this curriculum is sourced">
+          <p className="footnote">
+            Objectives read from CompTIA's official {SECURITY_PLUS.version} exam objectives
+            document, version {SECURITY_PLUS.objectives_document_version}. All five domains,
+            their weights and all{' '}
+            {SECURITY_PLUS.domains.reduce((a, d) => a + d.objectives.length, 0)} objective
+            statements match it word for word.
           </p>
           <p className="footnote">
-            Not yet confirmed: CompTIA's exact objective wording and sub-bullet term lists, and the
-            full text of NIST's subcategories. Those need the official PDFs. Anything resting on
-            them is flagged in the content. See <code>docs/research/</code>.
+            CSF {CSF.version} generated from NIST's own Cybersecurity and Privacy Reference Tool
+            export: {CSF.functions.length} Functions,{' '}
+            {CSF.functions.reduce((a, f) => a + f.categories.length, 0)} Categories and{' '}
+            {CSF.functions.reduce(
+              (a, f) => a + f.categories.reduce((b, c) => b + c.subcategories.length, 0),
+              0,
+            )}{' '}
+            Subcategories, verbatim.
           </p>
         </Panel>
       )}

@@ -5,24 +5,26 @@ Everything in `/content` traces back to a note in this folder. Each note separat
 open**. Content that rests on an unverified claim carries `needs_review: true`, and
 `npm run validate-content` reports the count on every run.
 
-## Method, and its limitation
+## Method
 
-Research was done on **2026-10-20** using web search.
+Research was done on **2026-10-20**, in three tiers of decreasing confidence.
 
-**The build environment's network policy blocks direct access to primary sources.**
-`comptia.org`, `nist.gov`, `csrc.nist.gov`, `owasp.org`, `attack.mitre.org` and
-`cisecurity.org` all fail to resolve from the container. Every fact below therefore
-comes from search-result summaries and secondary training-provider sites, not from the
-authoritative document.
+1. **Primary documents, read directly.** The curriculum spines now rest on these:
+   CompTIA's official SY0-701 exam objectives (Objectives Version 5.0) and NIST's own
+   CPRT export of the CSF 2.0 Core, both supplied as files. These were read, not
+   summarised.
+2. **Publishers' own pages, via search.** Direct HTTP to `comptia.org` and `nist.gov`
+   is blocked by the build environment's network policy, but web *search* reaches those
+   domains. Used for the SP 800 series revisions.
+3. **Third-party sources.** Everything still outstanding below.
 
 Where independent sources agree, and where an internal cross-check holds (objective
 counts, domain weights summing to 100%, CSF category counts summing per Function),
 confidence is reasonable. Where sources disagree, that is recorded rather than
 resolved by guessing.
 
-**To close this gap:** allow those domains in the environment's network settings, then
-re-run the verification pass and flip each spine's `verification.status` to
-`verified-primary-source`.
+**Both spines are now `verified-primary-source`.** What remains at tier 2 or 3 is listed
+under "Still outstanding" in each note.
 
 ## Notes
 

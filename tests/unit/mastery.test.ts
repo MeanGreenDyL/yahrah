@@ -29,6 +29,23 @@ describe('curriculum spine loads', () => {
     expect(CSF.functions).toHaveLength(6)
     expect(CSF.functions.reduce((a, f) => a + f.categories.length, 0)).toBe(22)
   })
+
+  it('carries all 106 CSF 2.0 subcategories from NIST', () => {
+    const subs = CSF.functions.flatMap((f) => f.categories.flatMap((c) => c.subcategories))
+    expect(subs).toHaveLength(106)
+    expect(new Set(subs.map((s) => s.id)).size).toBe(106)
+  })
+
+  it('spot-checks a subcategory against NIST wording', () => {
+    const all = CSF.functions.flatMap((f) => f.categories.flatMap((c) => c.subcategories))
+    const prAa06 = all.find((s) => s.id === 'PR.AA-06')
+    expect(prAa06?.text).toMatch(/[Pp]hysical access/)
+  })
+
+  it('both curriculum spines are read from primary sources', () => {
+    expect(SECURITY_PLUS.verification.status).toBe('verified-primary-source')
+    expect(CSF.verification.status).toBe('verified-primary-source')
+  })
 })
 
 describe('domainScores', () => {

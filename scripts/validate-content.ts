@@ -124,6 +124,7 @@ if (spParsed.success) {
 }
 
 const validCsf = new Set<string>()
+const csfSubcategories = new Set<string>()
 if (csfParsed.success) {
   for (const fn of csfParsed.data.functions) {
     validCsf.add(fn.id)
@@ -132,6 +133,31 @@ if (csfParsed.success) {
       validCsf.add(cat.id)
       if (!cat.id.startsWith(`${fn.id}.`)) {
         fail(csfFile, cat.id, `category id does not belong to Function ${fn.id}`)
+      }
+
+      /*
+       * Subcategories must belong to their category, be unique, and ascend.
+       *
+       * They must NOT be contiguous: NIST kept the original numbering when
+       * subcategories were withdrawn between CSF 1.1 and 2.0, so real gaps
+       * exist - ID.AM runs 01-05, 07, 08, and PR.DS runs 01, 02, 10, 11.
+       * An earlier version of this check demanded 01..n and failed on the
+       * authentic data.
+       */
+      const numbers: number[] = []
+      for (const sub of cat.subcategories) {
+        if (csfSubcategories.has(sub.id)) fail(csfFile, sub.id, 'duplicate subcategory id')
+        csfSubcategories.add(sub.id)
+        if (!sub.id.startsWith(`${cat.id}-`)) {
+          fail(csfFile, sub.id, `subcategory does not belong to category ${cat.id}`)
+        }
+        numbers.push(Number(sub.id.split('-')[1]))
+      }
+      for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] <= numbers[i - 1]) {
+          fail(csfFile, cat.id, `subcategories are not in ascending order (${numbers.join(', ')})`)
+          break
+        }
       }
     }
   }
@@ -356,7 +382,10 @@ if (validObjectives.size) {
 if (validCsf.size) {
   const categories = [...validCsf].filter((id) => id.includes('.'))
   const covered = categories.filter((id) => csfUse.has(id))
-  notes.push(`CSF 2.0 categories touched: ${covered.length}/${categories.length}`)
+  notes.push(
+    `CSF 2.0: ${categories.length} categories (${covered.length} touched), ` +
+      `${csfSubcategories.size} subcategories loaded`,
+  )
 }
 notes.push(
   `Content items: ${lessons.length} lessons, ${questions.length} questions, ${labs.length} labs, ` +

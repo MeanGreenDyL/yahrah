@@ -3,10 +3,14 @@
   "version": "SY0-701",
   "title": "CompTIA Security+ SY0-701",
   "verification": {
-    "status": "corroborated-official-source",
-    "needs_review": true,
-    "note": "The five domain names, the weights (12/22/18/28/20) and the 28-objective count were confirmed on 2026-10-20 against CompTIA's own site (comptia.org Security+ v7 certification page and CompTIA's 601-vs-701 comparison, which states SY0-701 has 28 objectives against SY0-601's 35). CompTIA's summary of each domain's subtopics matches the objectives recorded here. Still outstanding: the exact character-for-character objective wording and the sub-bullet term lists, which require the official objectives PDF. Direct HTTP access to comptia.org remains blocked by the build environment's network policy.",
-    "checked_on": "2026-10-20"
+    "status": "verified-primary-source",
+    "note": "Read directly from CompTIA's official 'CompTIA Security+ Certification Exam Objectives', Exam Number SY0-701, Objectives Version 5.0 (copyright 2023), supplied 2026-10-20. All five domain names and weights (12/22/18/28/20) and all 28 objective statements were checked character-for-character against that document and match. The per-objective sub-bullet term lists are in the same document and are transcribed into content as each village is built, rather than in bulk, so each one is checked against the page it came from.",
+    "checked_on": "2026-10-20",
+    "source": {
+      "title": "CompTIA Security+ Certification Exam Objectives (SY0-701), Version 5.0",
+      "url": "https://www.comptia.org/en-us/certifications/security/v7/",
+      "retrieved": "2026-10-20"
+    }
   },
   "successor": {
     "version": "SY0-801",
@@ -196,5 +200,6 @@
         }
       ]
     }
-  ]
+  ],
+  "objectives_document_version": "5.0"
 }

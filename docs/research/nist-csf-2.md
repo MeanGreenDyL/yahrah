@@ -1,9 +1,25 @@
 # NIST Cybersecurity Framework 2.0
 
-Researched 2026-10-20. Direct HTTP to `nist.gov` and `csrc.nist.gov` is blocked by the
-build environment's network policy, so NIST's documents were reached by **searching
-those domains** rather than fetching them. That is enough to confirm identifiers and
-names; it is not enough for full subcategory text.
+**Verified against the primary source, 2026-10-20.**
+
+`content/objectives/nist-csf-2.0.json` is **generated directly from NIST's official
+Cybersecurity and Privacy Reference Tool (CPRT) export** of the CSF 2.0 Core
+(`doc_identifier: CSF_2_0_0`), supplied as a file. Six Functions, 22 Categories and
+**106 Subcategories**, with every identifier and all descriptive text taken verbatim.
+
+Withdrawn CSF 1.1 elements are present in that export and were excluded via their
+`withdraw_reason` entries — the raw file contains 45 category entries and 185 unique
+subcategory ids, of which 22 and 106 respectively are live in 2.0.
+
+### One thing the import taught us
+
+**NIST's subcategory numbering has real gaps.** When subcategories were withdrawn
+between 1.1 and 2.0, the surviving ones kept their original numbers. `ID.AM` runs
+01-05, 07, 08. `PR.DS` runs 01, 02, 10, 11. `DE.AE` starts at 02.
+
+A validator rule demanding contiguous `01..n` numbering was written first and failed on
+the authentic data. The rule was wrong, not the data; it now checks uniqueness,
+ownership and ascending order instead.
 
 ## Structure
 
