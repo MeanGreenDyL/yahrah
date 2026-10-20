@@ -51,6 +51,36 @@ const validQuestion = {
   sources: [],
 }
 
+const terminalLab = {
+  id: 'lab-fixture',
+  engine: 'terminal',
+  title: 'Fixture lab',
+  brief: 'A simulated reconnaissance exercise inside the village training ground.',
+  sandboxNotice: 'Everything here is simulated. No real host is ever contacted.',
+  objectiveText: 'Enumerate the open ports on the training host.',
+  hints: [],
+  debrief: 'Port scanning reveals which services are listening, the first step of enumeration.',
+  xp: 50,
+  host: {
+    hostname: 'training',
+    user: 'itoshi',
+    cwd: '/home/itoshi',
+    filesystem: { name: '/', type: 'dir', children: [] },
+    network: [
+      {
+        ip: '192.0.2.10',
+        hostname: 'training',
+        ports: [{ port: 22, proto: 'tcp', state: 'open', service: 'ssh' }],
+      },
+    ],
+  },
+  goals: [
+    { id: 'g1', description: 'Scan the host', whenCommandMatches: '^nmap\\b', example: 'nmap 192.0.2.10' },
+  ],
+  tags: { objectives: ['SP.4.3'], csf: ['ID.RA'], frameworks: [] },
+  sources: [],
+}
+
 describe('validate-content', () => {
   it('passes on a well-formed content tree', () => {
     const dir = makeFixture()
@@ -128,31 +158,71 @@ describe('validate-content', () => {
     }
   })
 
+  it('rejects a terminal goal whose example cannot satisfy its own pattern', () => {
+    const dir = makeFixture()
+    try {
+      const lab = {
+        ...terminalLab,
+        goals: [
+          {
+            id: 'g1',
+            description: 'Scan the host',
+            // A backslash too many: this matches a literal backslash, not \b.
+            whenCommandMatches: '^nmap\\\\b',
+            example: 'nmap 192.0.2.10',
+          },
+        ],
+      }
+      writeFileSync(join(dir, 'labs', 'lab.json'), JSON.stringify([lab], null, 2))
+      const { code, output } = runValidator(dir)
+      expect(code).toBe(1)
+      expect(output).toContain('can never be met')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('rejects a terminal goal with an invalid regular expression', () => {
+    const dir = makeFixture()
+    try {
+      const lab = {
+        ...terminalLab,
+        goals: [
+          { id: 'g1', description: 'Scan', whenCommandMatches: '^nmap(', example: 'nmap x' },
+        ],
+      }
+      writeFileSync(join(dir, 'labs', 'lab.json'), JSON.stringify([lab], null, 2))
+      const { code, output } = runValidator(dir)
+      expect(code).toBe(1)
+      expect(output).toContain('not a valid regular expression')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('accepts a terminal goal whose example matches', () => {
+    const dir = makeFixture()
+    try {
+      writeFileSync(join(dir, 'labs', 'lab.json'), JSON.stringify([terminalLab], null, 2))
+      const { code } = runValidator(dir)
+      expect(code).toBe(0)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
   it('rejects a lab that names a real-world network target', () => {
     const dir = makeFixture()
     try {
       const lab = {
+        ...terminalLab,
         id: 'lab-bad-target',
-        engine: 'terminal',
-        title: 'Scan the gate',
-        brief: 'A simulated reconnaissance exercise inside the village training ground.',
-        sandboxNotice: 'Everything here is simulated. No real host is ever contacted.',
-        objectiveText: 'Enumerate the open ports on the training host.',
-        hints: [],
-        debrief: 'Port scanning reveals which services are listening, which is the first step of enumeration.',
-        xp: 50,
         host: {
-          hostname: 'training',
-          user: 'itoshi',
-          cwd: '/home/itoshi',
-          filesystem: { name: '/', type: 'dir', children: [] },
+          ...terminalLab.host,
           network: [
             { ip: '8.8.8.8', hostname: 'real-world', ports: [{ port: 53, proto: 'udp', state: 'open', service: 'dns' }] },
           ],
         },
-        goals: [{ id: 'g1', description: 'Scan the host', whenCommandMatches: '^nmap' }],
-        tags: { objectives: ['SP.4.3'], csf: ['ID.RA'], frameworks: [] },
-        sources: [],
       }
       writeFileSync(join(dir, 'labs', 'lab.json'), JSON.stringify([lab], null, 2))
       const { code, output } = runValidator(dir)

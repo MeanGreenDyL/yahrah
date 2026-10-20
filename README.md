@@ -90,19 +90,20 @@ responsible disclosure.
 
 ## Status
 
-**M0 through M3 complete.** Scaffold, curriculum spine, content validator and CI;
-pixel UI kit, chiptune audio, PWA, and a save system with export/import and
-migrations; overworld, progress dashboard and badges.
+**M0 through M6 complete.** Hakumura, the first village, is playable end to end.
 
-Playable now: title screen, the Three Vows, home with XP and streak, a walkable
-overworld with seven village gates, a progress dashboard (mastery by Security+ domain
-and by CSF 2.0 Function, weak areas, exam readiness), badges, settings and the Codex.
+A full run is: title screen, the Three Vows, then the overworld. Walk to Hakumura's
+gate and work through nine nodes in order — five lessons on General Security Concepts,
+a simulated terminal, a phishing triage exercise, a SIEM-style log hunt, and a boss
+fight that draws on all of it. "Today's training" runs a five-minute spaced-repetition
+session from whatever is due. The dashboard tracks mastery by Security+ domain and by
+CSF 2.0 Function, with a weighted exam-readiness score.
 
-Battles work: "Today's training" builds a session from whatever is due for review,
-topped up with questions you have not seen, and every answer is explained — including
-why each wrong choice is wrong. Missed concepts become due the same day and lead your
-next session.
+| | |
+|---|---|
+| Unit tests | 307 |
+| Playwright tests | 182, at 390x844 and 1280x800 |
+| Security+ objectives covered | 12 of 28 |
+| Runtime network calls | none, asserted by test |
 
-Lab engines and the first full village arrive in M4-M5.
-
-See [`docs/ROADMAP.md`](docs/ROADMAP.md).
+The remaining six villages are in [`docs/ROADMAP.md`](docs/ROADMAP.md).

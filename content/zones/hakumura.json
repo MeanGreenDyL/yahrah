@@ -1,0 +1,68 @@
+[
+  {
+    "id": "hakumura",
+    "name": "Hakumura",
+    "epithet": "The Village Hidden in First Light",
+    "order": 1,
+    "summary": "Where every Warden begins. Hakumura teaches the ground floor: what a control is, what you are actually protecting, and the three cryptographic tools people most often misuse.",
+    "domainId": "SP.1",
+    "csf": [
+      "GV.PO",
+      "PR.AA",
+      "PR.DS",
+      "ID.AM"
+    ],
+    "palette": {
+      "ink": "#0e1319",
+      "paper": "#e8e4d8",
+      "accent": "#e8c35a"
+    },
+    "nodes": [
+      {
+        "type": "lesson",
+        "ref": "haku-01-controls"
+      },
+      {
+        "type": "lesson",
+        "ref": "haku-02-cia"
+      },
+      {
+        "type": "lab",
+        "ref": "lab-gatehouse-ledger"
+      },
+      {
+        "type": "lesson",
+        "ref": "haku-03-zero-trust"
+      },
+      {
+        "type": "lab",
+        "ref": "lab-gatehouse-post"
+      },
+      {
+        "type": "lesson",
+        "ref": "haku-04-change"
+      },
+      {
+        "type": "lesson",
+        "ref": "haku-05-crypto"
+      },
+      {
+        "type": "lab",
+        "ref": "lab-nightwatch-log"
+      },
+      {
+        "type": "boss",
+        "ref": "boss-hollowgate"
+      }
+    ],
+    "creatureIds": [
+      "kagemono-lurebright",
+      "kagemono-grayfang",
+      "kagemono-dustveil",
+      "mamori-vigil",
+      "mamori-seal",
+      "mamori-ledger",
+      "dougu-nmap"
+    ]
+  }
+]

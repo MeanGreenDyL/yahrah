@@ -23,14 +23,22 @@
   choices, and an explanation after every answer covering every choice. Ten Security+
   questions and seven creatures as the first real content.
 
+- **M4 — Lab engines.** Three simulated engines, all content-driven and all pure
+  functions over data: a terminal (fake filesystem and network, command parser,
+  permissions, an in-sim scanner), a SIEM-style log viewer with filter, sort and
+  flagging, and phishing triage over headers, links and attachments.
+
+- **M5 — Hakumura.** One complete village, playable end to end: five lessons on
+  General Security Concepts, three hands-on labs, a boss fight, and seven creatures.
+  Nodes unlock in order. Proven by an e2e test that plays all nine nodes through at
+  both viewports.
+
+- **M6 — Polish and accessibility.** WCAG AA contrast computed from the palette tokens
+  in a unit test (and one real failure fixed), an accessibility audit across every
+  screen at both viewports, 44px tap targets, text scaling to 1.6x without overflow,
+  reduced-motion support, and the deploy pipeline.
+
 ## Next
-- **M4 — Lab engines.** Simulated terminal (fake filesystem and network, command
-  parser, scanning output, privilege-escalation puzzle), SIEM-style log analysis,
-  phishing triage.
-- **M5 — Hakumura.** One complete village: ~5 lessons on General Security Concepts,
-  battles, one of each lab, a boss fight, ~15 Kagemono/Mamori/Dougu.
-- **M6 — Polish and ship.** Animation and audio pass, accessibility audit, visual QA at
-  both viewports, live on Pages and installable on a phone.
 
 ## After M6 — remaining villages
 
@@ -54,7 +62,14 @@
 
 ## Open research debt
 
-Tracked in `docs/research/`. The big one: **no primary source has been reachable** from
-the build environment. Objective wording, CSF category titles, ATT&CK technique IDs and
-ATLAS versions all need confirming against the authoritative documents before the
-content leaves `needs_review`.
+Tracked in `docs/research/`.
+
+**Settled since M0:** the CSF 2.0 category count (22, confirmed against NIST's own
+Core), the Security+ domain names, weights and objective count (confirmed on
+comptia.org), and the current revisions of SP 800-61 (Rev 3 — Rev 2 is withdrawn),
+800-53, 800-30 and 800-207.
+
+**Still outstanding:** CompTIA's exact objective wording and sub-bullet term lists;
+NIST's ~106 subcategory identifiers and text; MITRE ATT&CK technique IDs; the MITRE
+ATLAS version and tactic names; ISO/IEC 27001's current edition. All need the primary
+documents, and anything resting on them stays flagged.

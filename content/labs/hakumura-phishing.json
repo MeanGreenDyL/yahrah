@@ -1,0 +1,184 @@
+[
+  {
+    "id": "lab-gatehouse-post",
+    "engine": "phishing",
+    "title": "The Morning Post",
+    "brief": "Four messages reached the gatehouse overnight. Two are ordinary. Two are not. Decide which is which.",
+    "sandboxNotice": "These messages are fabricated for training. No mailbox is read, no link is live, and no address here belongs to a real person or organisation.",
+    "objectiveText": "Inspect the headers, the links and the attachments, then give a verdict on each.",
+    "hints": [
+      "Compare the display name against the actual address, and the From against the Reply-To.",
+      "Hover intent: read where a link actually points, not what it says.",
+      "Urgency plus a request for credentials or payment is the oldest shape in the trade.",
+      "Not every message with an attachment is hostile. Over-blocking has a cost too."
+    ],
+    "debrief": "The two hostile messages lean on different levers. One forges a trusted internal sender and routes replies elsewhere, with a link whose visible text and real destination disagree. The other manufactures urgency about a payment and attaches a document with a double extension. The two legitimate messages are deliberately unremarkable: one has an attachment and one has an external sender, because a triage exercise where every suspicious-looking signal is hostile teaches you to over-block. Reporting a genuine invoice as phishing has a real cost.",
+    "xp": 100,
+    "emails": [
+      {
+        "id": "mail-rota",
+        "from": "Oribe <oribe@gatehouse.yahrah.local>",
+        "subject": "Rota for next week",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Oribe <oribe@gatehouse.yahrah.local>"
+          },
+          {
+            "name": "Return-Path",
+            "value": "oribe@gatehouse.yahrah.local"
+          },
+          {
+            "name": "Received-SPF",
+            "value": "pass (gatehouse.yahrah.local: domain of oribe@gatehouse.yahrah.local designates 192.168.10.5 as permitted sender)"
+          },
+          {
+            "name": "DKIM-Signature",
+            "value": "v=1; a=rsa-sha256; d=gatehouse.yahrah.local; s=mail; (valid)"
+          }
+        ],
+        "body": "Rota attached for next week. I have you on north post Tuesday and Thursday. Shout if that clashes with the training day.\n\nOribe",
+        "links": [],
+        "attachments": [
+          {
+            "filename": "rota-week-42.csv",
+            "size": "4 KB"
+          }
+        ],
+        "verdict": "legitimate",
+        "tells": [
+          "SPF passes and DKIM is valid for the sending domain.",
+          "Return-Path matches the From address.",
+          "The attachment is a plain .csv with a single, expected extension.",
+          "No urgency, no credential request, no link."
+        ]
+      },
+      {
+        "id": "mail-credentials",
+        "from": "Orinushi Sagae <sagae@gatehouse.yahrah.local>",
+        "replyTo": "sagae.gatehouse@mail-verify-yahrah.example",
+        "subject": "URGENT: re-verify your gatehouse account before 09:00",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Orinushi Sagae <sagae@gatehouse.yahrah.local>"
+          },
+          {
+            "name": "Reply-To",
+            "value": "sagae.gatehouse@mail-verify-yahrah.example"
+          },
+          {
+            "name": "Return-Path",
+            "value": "bounce@mail-verify-yahrah.example"
+          },
+          {
+            "name": "Received-SPF",
+            "value": "fail (gatehouse.yahrah.local: domain of sagae@gatehouse.yahrah.local does not designate 203.0.113.9 as permitted sender)"
+          },
+          {
+            "name": "Received",
+            "value": "from unknown (203.0.113.9) by mx.gatehouse.yahrah.local"
+          }
+        ],
+        "body": "Our records show your gatehouse credentials expire this morning. Re-verify now or your access will be suspended at 09:00 and you will need to attend in person to restore it.\n\nVerify here: https://gatehouse.yahrah.local/verify\n\nSagae",
+        "links": [
+          {
+            "text": "https://gatehouse.yahrah.local/verify",
+            "href": "https://mail-verify-yahrah.example/gatehouse/login"
+          }
+        ],
+        "attachments": [],
+        "verdict": "phish",
+        "tells": [
+          "SPF fails: the sending host is not permitted to send for that domain.",
+          "Reply-To and Return-Path point to an external domain that merely resembles the real one.",
+          "The link text and the actual destination disagree.",
+          "Manufactured deadline, and a demand to re-enter credentials."
+        ]
+      },
+      {
+        "id": "mail-invoice",
+        "from": "Accounts <billing@lantern-supply.example>",
+        "subject": "Overdue invoice - immediate payment required",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Accounts <billing@lantern-supply.example>"
+          },
+          {
+            "name": "Return-Path",
+            "value": "no-reply@lantern-suppIy.example"
+          },
+          {
+            "name": "Received-SPF",
+            "value": "softfail"
+          },
+          {
+            "name": "X-Mailer",
+            "value": "PHPMailer 5.2.0"
+          }
+        ],
+        "body": "Your account is overdue. The attached statement must be settled today to avoid suspension of supply. Open the attachment for payment details.",
+        "links": [],
+        "attachments": [
+          {
+            "filename": "statement_october.pdf.scr",
+            "size": "812 KB"
+          }
+        ],
+        "verdict": "phish",
+        "tells": [
+          "The attachment has a double extension: .pdf.scr is an executable, not a document.",
+          "The Return-Path domain uses a capital I in place of the l in 'supply'.",
+          "SPF softfails.",
+          "Urgency and a threat of service suspension to rush the decision."
+        ]
+      },
+      {
+        "id": "mail-supplier",
+        "from": "Kiri Tanabe <k.tanabe@lantern-supply.example>",
+        "subject": "Delivery window for the lamp oil order",
+        "headers": [
+          {
+            "name": "From",
+            "value": "Kiri Tanabe <k.tanabe@lantern-supply.example>"
+          },
+          {
+            "name": "Return-Path",
+            "value": "k.tanabe@lantern-supply.example"
+          },
+          {
+            "name": "Received-SPF",
+            "value": "pass (lantern-supply.example designates 203.0.113.60 as permitted sender)"
+          },
+          {
+            "name": "DKIM-Signature",
+            "value": "v=1; a=rsa-sha256; d=lantern-supply.example; s=sel1; (valid)"
+          }
+        ],
+        "body": "Morning. We can deliver the lamp oil Thursday between 10 and 12, or Friday first thing. Let me know which suits and I will book it in.\n\nKiri",
+        "links": [],
+        "attachments": [],
+        "verdict": "legitimate",
+        "tells": [
+          "External sender, but SPF passes and DKIM is valid for its own domain.",
+          "Return-Path matches the From address exactly.",
+          "No urgency, no credentials requested, no link or attachment.",
+          "External does not mean hostile: this is an ordinary supplier reply."
+        ]
+      }
+    ],
+    "tags": {
+      "objectives": [
+        "SP.2.2",
+        "SP.5.6"
+      ],
+      "csf": [
+        "PR.AT",
+        "DE.CM"
+      ],
+      "frameworks": []
+    },
+    "sources": []
+  }
+]

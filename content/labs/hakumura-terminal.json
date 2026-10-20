@@ -1,0 +1,203 @@
+[
+  {
+    "id": "lab-gatehouse-ledger",
+    "engine": "terminal",
+    "title": "The Gatehouse Ledger",
+    "brief": "Orinushi Sagae wants the gatehouse machine checked before the season turns. Nothing is wrong, she says. Find out whether that is true.",
+    "sandboxNotice": "This terminal is a simulation. There is no real machine, no real filesystem and no network connection. Nothing you type here leaves your device.",
+    "objectiveText": "Find the file that gives away more than it should, and say why it is a least-privilege failure.",
+    "hints": [
+      "Start by looking around: ls -l, then cd into what looks interesting.",
+      "A directory with mode 777 is readable and writable by everyone on the host.",
+      "find /srv -perm will list files any user can read.",
+      "Read gate-svc.conf and ask who, on this machine, is able to read it."
+    ],
+    "debrief": "The gate reader's configuration sits world-readable inside a world-writable shared folder. Every account on the host can read a service credential, and any of them could alter the handover notes. That is a least-privilege failure: the file's permissions grant far more access than the job requires. The fix is not to hide the file but to restrict it to the service account and have the service read it as itself.",
+    "xp": 90,
+    "host": {
+      "hostname": "gatehouse",
+      "user": "itoshi",
+      "cwd": "/home/itoshi",
+      "filesystem": {
+        "name": "/",
+        "type": "dir",
+        "mode": "755",
+        "owner": "root",
+        "group": "root",
+        "children": [
+          {
+            "name": "home",
+            "type": "dir",
+            "mode": "755",
+            "owner": "root",
+            "group": "root",
+            "children": [
+              {
+                "name": "itoshi",
+                "type": "dir",
+                "mode": "750",
+                "owner": "itoshi",
+                "group": "itoshi",
+                "children": [
+                  {
+                    "name": "notes.txt",
+                    "type": "file",
+                    "mode": "640",
+                    "owner": "itoshi",
+                    "group": "itoshi",
+                    "content": "Gatehouse rota for the week.\nRemember: the ledger room key is held by the warden on duty.\nSagae keeps saying the shared folder is 'temporary'. It has been temporary for two years."
+                  },
+                  {
+                    "name": "README",
+                    "type": "file",
+                    "mode": "644",
+                    "owner": "itoshi",
+                    "group": "itoshi",
+                    "content": "Welcome to the gatehouse terminal.\nThis is a training machine. Nothing here is real.\nStart with: ls -l /srv/gatehouse"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "srv",
+            "type": "dir",
+            "mode": "755",
+            "owner": "root",
+            "group": "root",
+            "children": [
+              {
+                "name": "gatehouse",
+                "type": "dir",
+                "mode": "755",
+                "owner": "root",
+                "group": "staff",
+                "children": [
+                  {
+                    "name": "rota.csv",
+                    "type": "file",
+                    "mode": "644",
+                    "owner": "root",
+                    "group": "staff",
+                    "content": "day,warden,post\nmon,Sagae,north\ntue,Itoshi,north\nwed,Oribe,east"
+                  },
+                  {
+                    "name": "ledger.db",
+                    "type": "file",
+                    "mode": "640",
+                    "owner": "root",
+                    "group": "staff",
+                    "content": "(binary ledger data)"
+                  },
+                  {
+                    "name": "shared",
+                    "type": "dir",
+                    "mode": "777",
+                    "owner": "root",
+                    "group": "staff",
+                    "children": [
+                      {
+                        "name": "handover.txt",
+                        "type": "file",
+                        "mode": "666",
+                        "owner": "root",
+                        "group": "staff",
+                        "content": "Handover notes.\nThe service account for the gate reader is gate-svc.\nIts password is stored in gate-svc.conf so nobody has to ask Sagae at 3am."
+                      },
+                      {
+                        "name": "gate-svc.conf",
+                        "type": "file",
+                        "mode": "644",
+                        "owner": "root",
+                        "group": "staff",
+                        "content": "# gate reader service configuration\nhost=192.0.2.40\nport=8443\nuser=gate-svc\npassword=REDACTED-IN-SIMULATION\n# NOTE: this file is world-readable. That is the finding."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "etc",
+            "type": "dir",
+            "mode": "755",
+            "owner": "root",
+            "group": "root",
+            "children": [
+              {
+                "name": "passwd",
+                "type": "file",
+                "mode": "644",
+                "owner": "root",
+                "group": "root",
+                "content": "root:x:0:0:root:/root:/bin/bash\nitoshi:x:1000:1000:Itoshi:/home/itoshi:/bin/bash\ngate-svc:x:999:999:Gate Reader Service:/srv/gatehouse:/usr/sbin/nologin"
+              },
+              {
+                "name": "shadow",
+                "type": "file",
+                "mode": "600",
+                "owner": "root",
+                "group": "root",
+                "content": "(unreadable by design)"
+              }
+            ]
+          }
+        ]
+      },
+      "network": [
+        {
+          "ip": "192.0.2.40",
+          "hostname": "gate-reader",
+          "ports": [
+            {
+              "port": 8443,
+              "proto": "tcp",
+              "state": "open",
+              "service": "https",
+              "version": "simulated gate reader"
+            },
+            {
+              "port": 22,
+              "proto": "tcp",
+              "state": "filtered",
+              "service": "ssh"
+            }
+          ]
+        }
+      ]
+    },
+    "goals": [
+      {
+        "id": "look",
+        "description": "List the gatehouse directory",
+        "whenCommandMatches": "^ls\\b.*gatehouse",
+        "example": "ls -l /srv/gatehouse"
+      },
+      {
+        "id": "find-readable",
+        "description": "Search for world-readable files",
+        "whenCommandMatches": "^find\\b.*-perm",
+        "example": "find /srv -perm"
+      },
+      {
+        "id": "read-config",
+        "description": "Read the service configuration",
+        "whenCommandMatches": "^(cat|grep)\\b.*gate-svc\\.conf",
+        "example": "cat /srv/gatehouse/shared/gate-svc.conf"
+      }
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.1",
+        "SP.4.6"
+      ],
+      "csf": [
+        "PR.AA",
+        "ID.AM"
+      ],
+      "frameworks": []
+    },
+    "sources": []
+  }
+]

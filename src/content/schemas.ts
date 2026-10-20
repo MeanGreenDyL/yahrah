@@ -353,6 +353,12 @@ export const labSchema = z.discriminatedUnion('engine', [
           description: z.string().min(1),
           /** Matched against normalised command text. */
           whenCommandMatches: z.string().min(1),
+          /**
+           * A command that MUST satisfy the pattern above. The validator
+           * checks it, so a lab can never ship with a goal that silently
+           * never matches and leaves the player unable to finish.
+           */
+          example: z.string().min(1),
         }),
       )
       .min(1),

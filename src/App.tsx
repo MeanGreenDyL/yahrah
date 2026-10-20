@@ -8,6 +8,9 @@ import { CodexScreen } from '@/screens/CodexScreen'
 import { OverworldScreen } from '@/screens/OverworldScreen'
 import { DashboardScreen } from '@/screens/DashboardScreen'
 import { BattleScreen } from '@/screens/BattleScreen'
+import { LabScreen } from '@/screens/LabScreen'
+import { LessonScreen } from '@/screens/LessonScreen'
+import { VillageScreen } from '@/screens/VillageScreen'
 import { Button } from '@/ui/Button'
 import { Panel } from '@/ui/Panel'
 
@@ -67,6 +70,9 @@ export function App() {
       {screen === 'overworld' && <OverworldScreen />}
       {screen === 'dashboard' && <DashboardScreen />}
       {screen === 'battle' && <BattleScreen />}
+      {screen === 'lab' && <LabScreen />}
+      {screen === 'lesson' && <LessonScreen />}
+      {screen === 'village' && <VillageScreen />}
     </main>
   )
 }

@@ -178,3 +178,58 @@ A long run of "easy" grades compounds the interval until the date arithmetic ove
 and throws, which a save file carrying that interval would then do on every load. The
 interval is capped at five years, far beyond any exam horizon. Found by a test that
 drilled 30 consecutive easy reviews.
+
+## D20 — A third verification state, because binary was dishonest
+
+`verified-primary-source` / `unverified-primary-source` could not express the actual
+situation: direct HTTP to comptia.org and nist.gov is blocked, but **web search reaches
+those domains**, so their own pages and PDFs could be used as sources after all.
+
+`corroborated-official-source` means: confirmed against the publisher's own material,
+but the full document was not read. Both spines now carry it. The dashboard states
+precisely what is confirmed (domains, weights, objective count, Functions, all 22
+Categories) and what is not (CompTIA's exact objective wording and sub-bullets, NIST's
+subcategory text).
+
+## D21 — SP 800-61 Rev 2 is withdrawn, which changes planned content
+
+Researching the SP 800 series turned up that **SP 800-61 is at Revision 3** (April 2025)
+and Rev 2 is withdrawn in its entirety. Rev 3 is a CSF 2.0 Community Profile: its
+recommendations are organised by CSF Function, not by the familiar four-phase lifecycle.
+
+The incident-response content planned for Yoimura must follow Rev 3. Teaching
+Preparation / Detection and Analysis / Containment, Eradication and Recovery /
+Post-Incident Activity as the current model would be teaching a withdrawn document —
+exactly the failure the honesty rule exists to prevent.
+
+## D22 — A lab goal must prove it can be met
+
+A goal regex with one backslash too many (`\\b` rather than `\b`) matched a literal
+backslash, so the terminal lab could be played perfectly and never complete. Nothing
+caught it but a test.
+
+Every terminal goal now carries an `example` command, and `validate-content` asserts
+the pattern actually matches it, as well as that the pattern compiles at all. A lab can
+no longer ship in a state where the player cannot finish it.
+
+## D23 — Two more class-name collisions, same root cause
+
+`.screen-title` styled an `<h1>` and was also used as a screen modifier, pushing the
+pixel font onto a whole screen's prose. Then `term-input` was both a log-line kind and
+the terminal's text field, so echoed commands rendered as boxed inputs.
+
+Both were caught by looking at screenshots, not by tests. Line-kind classes are now
+prefixed (`term-ln-input`), and the container class is `screen-centred`. The lesson:
+a class name built by template interpolation needs a namespace prefix, because the
+collision is invisible at the point of use.
+
+## D24 — The palette failed WCAG 1.4.11 and the fix was computed, not eyeballed
+
+`--edge` was `#3d5068`, which is 2.26:1 against the page background — below the 3:1 that
+WCAG requires for UI component boundaries. Panel borders are a UI boundary.
+
+The replacement `#5d7a9e` was solved for, not picked: it clears 3:1 against *every*
+surface it borders (ink, ink-2, panel, panel-2), because a border sits between two
+colours and must be visible against both. A unit test now computes the contrast ratio
+from the stylesheet tokens for every foreground/background pair in the design system,
+so a future palette change cannot quietly regress it.

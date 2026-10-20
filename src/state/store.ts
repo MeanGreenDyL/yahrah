@@ -12,7 +12,16 @@ import {
 import { review } from '@/engine/srs'
 import { recordAnswer } from '@/engine/mastery'
 import { awardXp } from '@/engine/progression'
-import { QUESTION_BY_ID, QUESTIONS, KAGEMONO, refsFor } from '@/content'
+import {
+  BOSS_BY_ID,
+  CREATURE_BY_ID,
+  LAB_BY_ID,
+  LESSON_BY_ID,
+  QUESTION_BY_ID,
+  QUESTIONS,
+  KAGEMONO,
+  refsFor,
+} from '@/content'
 import { buildSession } from '@/engine/srs'
 import {
   importSave,
@@ -34,6 +43,9 @@ export type Screen =
   | 'overworld'
   | 'dashboard'
   | 'battle'
+  | 'lab'
+  | 'lesson'
+  | 'village'
 
 export type BootStatus = 'booting' | 'ready' | 'corrupt'
 
@@ -46,10 +58,19 @@ type State = {
   backend: storage.Backend
   ready: boolean
   battle: BattleState | null
+  activeLabId: string | null
+  activeLessonId: string | null
+  activeBossId: string | null
 
   init: () => Promise<void>
   beginBattle: (foe: Foe, questionIds: string[], element: Element) => void
   beginDailySession: (size?: number) => boolean
+  openLab: (labId: string) => void
+  finishLab: (labId: string) => void
+  openLesson: (lessonId: string) => void
+  finishLesson: (lessonId: string) => void
+  answerLessonCheck: (questionId: string, correct: boolean) => void
+  beginBossBattle: (bossId: string) => void
   answerBattle: (correct: boolean, usedHint?: boolean) => void
   advanceBattle: () => void
   leaveBattle: () => void
@@ -81,6 +102,9 @@ export const useGame = create<State>((set, get) => ({
   backend: 'memory',
   ready: false,
   battle: null,
+  activeLabId: null,
+  activeLessonId: null,
+  activeBossId: null,
 
   async init() {
     const result = await storage.load()
@@ -261,7 +285,25 @@ export const useGame = create<State>((set, get) => ({
       ...save,
       profile: { ...save.profile, xp: award.xp, level: award.level },
     }
-    const { save: synced } = syncBadges(withXp)
+    // A boss win is recorded on the save, once.
+    const bossId = get().activeBossId
+    let progressed = withXp
+    if (bossId && nextBattle.phase === 'won' && !withXp.progress.bossesDefeated.includes(bossId)) {
+      const boss = BOSS_BY_ID.get(bossId)
+      const bossAward = awardXp(withXp.profile.xp, boss?.xp ?? 0)
+      progressed = {
+        ...withXp,
+        profile: { ...withXp.profile, xp: bossAward.xp, level: bossAward.level },
+        progress: {
+          ...withXp.progress,
+          bossesDefeated: [...withXp.progress.bossesDefeated, bossId],
+          creaturesCaught: withXp.progress.creaturesCaught.includes(nextBattle.foe.creatureId)
+            ? withXp.progress.creaturesCaught
+            : [...withXp.progress.creaturesCaught, nextBattle.foe.creatureId],
+        },
+      }
+    }
+    const { save: synced } = syncBadges(progressed)
 
     get().sfx(nextBattle.phase === 'won' ? 'levelup' : 'cancel')
     set({ battle: nextBattle, save: synced })
@@ -269,7 +311,103 @@ export const useGame = create<State>((set, get) => ({
   },
 
   leaveBattle() {
-    set({ battle: null, screen: 'home' })
+    // A boss fight belongs to a village, so return there rather than home.
+    const wasBoss = get().activeBossId !== null
+    set({ battle: null, activeBossId: null, screen: wasBoss ? 'village' : 'home' })
+  },
+
+  openLab(labId) {
+    if (!LAB_BY_ID.has(labId)) return
+    set({ activeLabId: labId, screen: 'lab' })
+  },
+
+  openLesson(lessonId) {
+    if (!LESSON_BY_ID.has(lessonId)) return
+    set({ activeLessonId: lessonId, screen: 'lesson' })
+  },
+
+  /** A check inside a lesson updates mastery and the scheduler, like a battle. */
+  answerLessonCheck(questionId, correct) {
+    const save = get().save
+    if (!QUESTION_BY_ID.has(questionId)) return
+    const next: Save = {
+      ...save,
+      mastery: recordAnswer(save.mastery, refsFor(questionId), correct),
+      srs: {
+        ...save.srs,
+        [questionId]: review(save.srs[questionId], correct ? 'good' : 'again', today()),
+      },
+    }
+    get().sfx(correct ? 'hit' : 'hurt')
+    set({ save: next })
+    schedulePersist(next)
+  },
+
+  finishLesson(lessonId) {
+    const lesson = LESSON_BY_ID.get(lessonId)
+    const save = get().save
+    if (!lesson || save.progress.lessonsCompleted.includes(lessonId)) {
+      set({ activeLessonId: null, screen: 'village' })
+      return
+    }
+    const award = awardXp(save.profile.xp, 60)
+    const withProgress: Save = {
+      ...save,
+      profile: { ...save.profile, xp: award.xp, level: award.level },
+      progress: {
+        ...save.progress,
+        lessonsCompleted: [...save.progress.lessonsCompleted, lessonId],
+      },
+    }
+    const { save: synced } = syncBadges(withProgress)
+    get().sfx('levelup')
+    set({ save: synced, activeLessonId: null, screen: 'village' })
+    schedulePersist(synced)
+  },
+
+  beginBossBattle(bossId) {
+    const boss = BOSS_BY_ID.get(bossId)
+    if (!boss) return
+    const creature = CREATURE_BY_ID.get(boss.creatureId)
+    if (!creature) return
+    const foe: Foe = {
+      creatureId: creature.id,
+      name: boss.name,
+      element: creature.element,
+      maxHp: 60 + boss.questionIds.length * 22,
+    }
+    set({
+      activeBossId: bossId,
+      battle: startBattle(foe, boss.questionIds, 'signal'),
+      screen: 'battle',
+    })
+  },
+
+  /** Record a completed lab once, award its XP, and return home. */
+  finishLab(labId) {
+    const lab = LAB_BY_ID.get(labId)
+    const save = get().save
+    if (!lab || save.progress.labsCompleted.includes(labId)) {
+      set({ activeLabId: null, screen: 'home' })
+      return
+    }
+
+    const award = awardXp(save.profile.xp, lab.xp)
+    const withProgress: Save = {
+      ...save,
+      profile: { ...save.profile, xp: award.xp, level: award.level },
+      progress: { ...save.progress, labsCompleted: [...save.progress.labsCompleted, labId] },
+      mastery: recordAnswer(
+        save.mastery,
+        [...lab.tags.objectives, ...lab.tags.csf],
+        true,
+      ),
+    }
+    const { save: synced } = syncBadges(withProgress)
+
+    get().sfx('levelup')
+    set({ save: synced, activeLabId: null, screen: 'village' })
+    schedulePersist(synced)
   },
 }))
 

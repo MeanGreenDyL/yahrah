@@ -178,7 +178,7 @@ export function OverworldScreen() {
               full
               onClick={() => {
                 sfx('confirm')
-                go('home')
+                go('village')
               }}
             >
               Enter {village.name}

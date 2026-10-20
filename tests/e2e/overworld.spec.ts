@@ -110,10 +110,14 @@ test.describe('dashboard', () => {
     })
   })
 
-  test('surfaces that the curriculum is not primary-source verified', async ({ page }) => {
+  test('states honestly how the curriculum is sourced', async ({ page }) => {
     await enterGame(page)
     await page.getByRole('button', { name: 'Progress' }).click()
-    await expect(page.getByText(/not yet been checked against/)).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'How this curriculum is sourced' })).toBeVisible()
+    // It claims what is confirmed...
+    await expect(page.getByText(/confirmed against CompTIA's own site/)).toBeVisible()
+    // ...and is explicit about what is not.
+    await expect(page.getByText(/Not yet confirmed/)).toBeVisible()
   })
 
   test('every domain and function has a progress bar', async ({ page }) => {

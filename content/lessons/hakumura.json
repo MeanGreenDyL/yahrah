@@ -1,0 +1,399 @@
+[
+  {
+    "id": "haku-01-controls",
+    "title": "What a Control Actually Is",
+    "outcome": "You can place any security control on two axes: where it lives, and what it does.",
+    "estimatedMinutes": 6,
+    "beats": [
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Everyone wants to talk about attacks. We are going to start with the dull half, because the dull half is what you will be paid for."
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "A control is anything you put in place to reduce risk. A locked door. A policy. A firewall rule. A training session. All controls."
+      },
+      {
+        "kind": "note",
+        "title": "Two axes, not one",
+        "text": "People get tangled here because they try to sort controls into one list. There are two questions, and every control answers both. Where does it live? And what does it do?"
+      },
+      {
+        "kind": "compare",
+        "title": "Where it lives — the CATEGORY",
+        "rows": [
+          {
+            "term": "Technical",
+            "meaning": "Enforced by hardware or software. A firewall rule, file permissions, an access control list."
+          },
+          {
+            "term": "Managerial",
+            "meaning": "Policies, standards, risk decisions. The things that direct the programme."
+          },
+          {
+            "term": "Operational",
+            "meaning": "Carried out by people, day to day. Log review, awareness training, guard rotations."
+          },
+          {
+            "term": "Physical",
+            "meaning": "A tangible barrier in the world. A door, a fence, a lock, a bollard."
+          }
+        ]
+      },
+      {
+        "kind": "compare",
+        "title": "What it does — the TYPE",
+        "rows": [
+          {
+            "term": "Preventive",
+            "meaning": "Stops the action happening. A locked door."
+          },
+          {
+            "term": "Deterrent",
+            "meaning": "Discourages someone from trying. A sign saying the area is monitored."
+          },
+          {
+            "term": "Detective",
+            "meaning": "Identifies that it happened. A camera, a log, an alert."
+          },
+          {
+            "term": "Corrective",
+            "meaning": "Puts things right afterwards. A restore from backup."
+          },
+          {
+            "term": "Compensating",
+            "meaning": "Stands in when the control you wanted is not possible."
+          },
+          {
+            "term": "Directive",
+            "meaning": "Instructs people what to do. An acceptable use policy."
+          }
+        ]
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "A badge reader on the ledger room is physical by category and preventive by type. The camera above it is physical and detective. Same door, two controls, four labels. None of them compete."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-control-category-physical"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Now the one that catches people out. When you cannot have the control you want, you reach for something that covers the same risk another way."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-compensating-control"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Good. Remember that a compensating control is not a lesser control. It is an honest answer to a constraint."
+      }
+    ],
+    "questionIds": [
+      "q-control-category-physical",
+      "q-control-type-detective",
+      "q-compensating-control"
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.1"
+      ],
+      "csf": [
+        "GV.PO",
+        "PR.AA"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "haku-02-cia",
+    "title": "The Three Questions",
+    "outcome": "You can say which property of information an incident actually attacked, and defend the answer.",
+    "estimatedMinutes": 6,
+    "beats": [
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Three questions sit under everything. Can the wrong people read it. Can anyone change it without us knowing. Can the right people reach it when they need it."
+      },
+      {
+        "kind": "compare",
+        "title": "The triad",
+        "rows": [
+          {
+            "term": "Confidentiality",
+            "meaning": "Only those authorised can read it."
+          },
+          {
+            "term": "Integrity",
+            "meaning": "It has not been altered without authorisation, and we would know if it had."
+          },
+          {
+            "term": "Availability",
+            "meaning": "Those authorised can reach it when they need to."
+          }
+        ]
+      },
+      {
+        "kind": "note",
+        "title": "Why this matters in practice",
+        "text": "When an incident lands, the first useful question is which of the three broke. It decides who you call, what you measure, and whether you are restoring or investigating."
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Encryption protects confidentiality. A hash protects integrity. A backup protects availability. One control rarely covers all three, which is why you layer them."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-cia-availability"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Ransomware is the example that trips people, because it feels like theft. Encrypting data in place denies access. It becomes a confidentiality breach only when they take a copy first — which, these days, they usually do."
+      },
+      {
+        "kind": "note",
+        "title": "AAA sits alongside it",
+        "text": "Authentication proves who you are. Authorisation decides what you may do. Accounting records what you did. The third one is what makes it impossible to credibly deny an action later."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-aaa-accounting"
+      }
+    ],
+    "questionIds": [
+      "q-cia-availability",
+      "q-aaa-accounting"
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.2"
+      ],
+      "csf": [
+        "PR.DS",
+        "PR.AA"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "haku-03-zero-trust",
+    "title": "The Gate That Trusts Nobody",
+    "outcome": "You can explain why network location is not a reason to trust a request.",
+    "estimatedMinutes": 5,
+    "beats": [
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "The old way of thinking built a wall and called everything inside it safe. You can see the flaw from here."
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Once an attacker is inside — a stolen credential, a compromised laptop, a supplier's connection — the wall is behind them, and it was the only thing deciding who to trust."
+      },
+      {
+        "kind": "note",
+        "title": "Zero Trust, stated plainly",
+        "text": "No request is trusted because of where it came from. Every request is authenticated, authorised and checked against policy, every time, and granted the least access that does the job."
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "NIST wrote this down as SP 800-207. A policy decision point decides; a policy enforcement point sits in front of the resource and does what it is told. That is the whole shape of it."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-zero-trust-assumption"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "The part people miss: it is not a product. Nobody sells you Zero Trust. It is a way of deciding, applied consistently, and most of the work is identity."
+      }
+    ],
+    "questionIds": [
+      "q-zero-trust-assumption"
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.2",
+        "SP.3.1"
+      ],
+      "csf": [
+        "PR.AA",
+        "GV.PO"
+      ],
+      "frameworks": [
+        "NIST SP 800-207"
+      ]
+    }
+  },
+  {
+    "id": "haku-04-change",
+    "title": "The Standing Ledger",
+    "outcome": "You can say why change management is a security control and not merely paperwork.",
+    "estimatedMinutes": 5,
+    "beats": [
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Most of the outages I have seen were not attacks. They were a change nobody recorded, made by someone who has since gone home."
+      },
+      {
+        "kind": "note",
+        "title": "Why this is security, not admin",
+        "text": "An undocumented change cannot be reviewed, cannot be reversed, and cannot be told apart from an attacker's change. Change management is what makes 'that was not us' a statement you can actually prove."
+      },
+      {
+        "kind": "compare",
+        "title": "What a change request carries",
+        "rows": [
+          {
+            "term": "Impact analysis",
+            "meaning": "What this touches, and what could go wrong."
+          },
+          {
+            "term": "Test results",
+            "meaning": "Evidence it works somewhere that is not production."
+          },
+          {
+            "term": "Approval",
+            "meaning": "Someone with the standing to accept the risk said yes."
+          },
+          {
+            "term": "Backout plan",
+            "meaning": "The documented route back to a known-good state."
+          },
+          {
+            "term": "Maintenance window",
+            "meaning": "When it may happen, and who is awake for it."
+          }
+        ]
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "At three in the morning, when the upgrade is failing, exactly one of those still helps you."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-change-backout"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Write the backout plan before you need it. You will not write a good one while the room is on fire."
+      }
+    ],
+    "questionIds": [
+      "q-change-backout"
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.3"
+      ],
+      "csf": [
+        "GV.PO",
+        "RC.RP"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "haku-05-crypto",
+    "title": "One Way and Two Ways",
+    "outcome": "You can choose between hashing, encryption and signing for a given job, and say why the others are wrong.",
+    "estimatedMinutes": 7,
+    "beats": [
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Three tools. People reach for the wrong one constantly, and the mistake is always the same: using something reversible for a job that must not be reversible."
+      },
+      {
+        "kind": "compare",
+        "title": "The three tools",
+        "rows": [
+          {
+            "term": "Hashing",
+            "meaning": "One way. No key reverses it. Proves integrity, and stores passwords."
+          },
+          {
+            "term": "Symmetric encryption",
+            "meaning": "Two ways, one shared key. Fast. Good for bulk data."
+          },
+          {
+            "term": "Asymmetric encryption",
+            "meaning": "Two ways, a key pair. Slower. Solves the problem of agreeing a key at all."
+          },
+          {
+            "term": "Digital signature",
+            "meaning": "A hash, encrypted with the signer's private key. Proves origin and integrity."
+          }
+        ]
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Storing passwords is the classic. Encrypt them and whoever holds the key holds every password. Hash them with a salt and a slow function, and there is nothing to reverse."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-hashing-vs-encryption"
+      },
+      {
+        "kind": "note",
+        "title": "What a salt is for",
+        "text": "A salt is a unique value mixed in before hashing, so two people with the same password produce different stored values. It defeats precomputed tables. It is not a secret, and it does not need to be."
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "Signing is the other one worth getting right. A signature proves who sent it and that it has not changed. It does not hide anything — a signed message is still readable by anyone."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-digital-signature-property"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "And underneath all of it sits the question of whose key is whose. That is what a certificate authority is for, and it vouches for less than most people assume."
+      },
+      {
+        "kind": "check",
+        "questionId": "q-pki-ca-role"
+      },
+      {
+        "kind": "dialog",
+        "speaker": "Orinushi Sagae",
+        "text": "That is the ground floor. Everything else in Yahrah is built on it."
+      }
+    ],
+    "questionIds": [
+      "q-hashing-vs-encryption",
+      "q-digital-signature-property",
+      "q-pki-ca-role"
+    ],
+    "tags": {
+      "objectives": [
+        "SP.1.4"
+      ],
+      "csf": [
+        "PR.DS",
+        "PR.AA"
+      ],
+      "frameworks": []
+    }
+  }
+]

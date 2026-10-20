@@ -51,7 +51,7 @@ export function HomeScreen() {
             hint: v.status === 'open' ? v.teaches : 'Sealed for now',
             disabled: v.status !== 'open',
           }))}
-          onSelect={() => go('overworld')}
+          onSelect={(id) => go(id === 'hakumura' ? 'village' : 'overworld')}
         />
       </Panel>
 

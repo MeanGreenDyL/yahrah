@@ -117,11 +117,19 @@ export function DashboardScreen() {
       </Panel>
 
       {CURRICULUM_NEEDS_REVIEW && (
-        <Panel id="review" tone="warn">
+        <Panel id="review" tone="warn" title="How this curriculum is sourced">
           <p className="footnote">
-            The curriculum spine has not yet been checked against CompTIA's and NIST's own
-            published documents. Objective wording and category titles may shift once it is. See
-            <code> docs/research/</code>.
+            The {SECURITY_PLUS.version} domains, weights and objective count are confirmed against
+            CompTIA's own site. The {CSF.version} Functions and all {CSF.functions.reduce(
+              (a, f) => a + f.categories.length,
+              0,
+            )}{' '}
+            Categories are confirmed against NIST's own published Core.
+          </p>
+          <p className="footnote">
+            Not yet confirmed: CompTIA's exact objective wording and sub-bullet term lists, and the
+            full text of NIST's subcategories. Those need the official PDFs. Anything resting on
+            them is flagged in the content. See <code>docs/research/</code>.
           </p>
         </Panel>
       )}

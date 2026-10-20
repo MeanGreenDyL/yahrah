@@ -307,6 +307,26 @@ function isSimulatedIp(ip: string): boolean {
 
 for (const { file, data } of labs) {
   if (data.engine === 'terminal') {
+    for (const goal of data.goals) {
+      let pattern: RegExp | null = null
+      try {
+        pattern = new RegExp(goal.whenCommandMatches, 'i')
+      } catch (e) {
+        fail(
+          file,
+          `${data.id}.goals.${goal.id}`,
+          `whenCommandMatches is not a valid regular expression: ${(e as Error).message}`,
+        )
+      }
+      if (pattern && !pattern.test(goal.example)) {
+        fail(
+          file,
+          `${data.id}.goals.${goal.id}`,
+          `example command ${JSON.stringify(goal.example)} does not match ` +
+            `${JSON.stringify(goal.whenCommandMatches)}, so this goal can never be met`,
+        )
+      }
+    }
     for (const host of data.host.network) {
       if (!isSimulatedIp(host.ip)) {
         fail(

@@ -101,11 +101,14 @@ export function SettingsScreen() {
             Import save
           </Button>
         </div>
+        {/* Hidden proxy for the visible "Import save" button. Still named,
+            because assistive tech can reach it even when it is off-screen. */}
         <input
           ref={fileRef}
           type="file"
           accept="application/json,.json"
           className="visually-hidden"
+          aria-label="Choose a Yahrah save file to import"
           onChange={(e) => {
             const file = e.target.files?.[0]
             if (file) void upload(file)

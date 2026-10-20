@@ -1,0 +1,257 @@
+[
+  {
+    "id": "lab-nightwatch-log",
+    "engine": "logs",
+    "title": "What Happened at Two in the Morning",
+    "brief": "The gate reader's log covers a full day. Sagae says nothing happened. Read it yourself.",
+    "sandboxNotice": "These log entries are fabricated for training. They come from no real system, and no log source is contacted.",
+    "objectiveText": "Flag every entry that forms part of the attack, and nothing else.",
+    "hints": [
+      "Sort by time. Does anything cluster where it should not?",
+      "One source address appears that is not on the internal 192.168.10.0/24 range.",
+      "Many different usernames, one password attempt each, seconds apart, from one source. That shape has a name.",
+      "The attack does not end at the successful login. What did that account then do?"
+    ],
+    "debrief": "This is a password spray: one attacker source trying a single common password against many accounts in turn, which avoids the lockout that repeated attempts on one account would trigger. Five failures in eight seconds from 198.51.100.77 are followed by a success on gate-svc, the service account whose credential was sitting world-readable in the gatehouse share. The file.read a minute later is the actual objective. Flagging only the failures misses the breach; flagging only the success misses the spray that found it. Oribe's single failed login at 13:05 followed by a success is just a typo, and calling it malicious is the false positive this exercise is really testing.",
+    "xp": 110,
+    "columns": [
+      "time",
+      "user",
+      "source",
+      "event",
+      "result"
+    ],
+    "rows": [
+      {
+        "id": "l01",
+        "cells": {
+          "time": "08:58:02",
+          "user": "sagae",
+          "source": "192.168.10.22",
+          "event": "auth.login",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l02",
+        "cells": {
+          "time": "09:01:14",
+          "user": "itoshi",
+          "source": "192.168.10.31",
+          "event": "auth.login",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l03",
+        "cells": {
+          "time": "09:04:47",
+          "user": "oribe",
+          "source": "192.168.10.44",
+          "event": "auth.login",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l04",
+        "cells": {
+          "time": "09:12:03",
+          "user": "sagae",
+          "source": "192.168.10.22",
+          "event": "file.read",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l05",
+        "cells": {
+          "time": "02:14:08",
+          "user": "a.hoshino",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l06",
+        "cells": {
+          "time": "02:14:09",
+          "user": "b.kuroda",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l07",
+        "cells": {
+          "time": "02:14:11",
+          "user": "c.mori",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l08",
+        "cells": {
+          "time": "02:14:12",
+          "user": "d.nakai",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l09",
+        "cells": {
+          "time": "02:14:14",
+          "user": "e.saito",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l10",
+        "cells": {
+          "time": "02:14:16",
+          "user": "gate-svc",
+          "source": "198.51.100.77",
+          "event": "auth.login",
+          "result": "success"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l11",
+        "cells": {
+          "time": "02:15:40",
+          "user": "gate-svc",
+          "source": "198.51.100.77",
+          "event": "file.read",
+          "result": "success"
+        },
+        "malicious": true
+      },
+      {
+        "id": "l12",
+        "cells": {
+          "time": "09:31:55",
+          "user": "oribe",
+          "source": "192.168.10.44",
+          "event": "file.read",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l13",
+        "cells": {
+          "time": "10:02:19",
+          "user": "itoshi",
+          "source": "192.168.10.31",
+          "event": "auth.logout",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l14",
+        "cells": {
+          "time": "11:47:30",
+          "user": "sagae",
+          "source": "192.168.10.22",
+          "event": "config.change",
+          "result": "success"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l15",
+        "cells": {
+          "time": "13:05:01",
+          "user": "oribe",
+          "source": "192.168.10.44",
+          "event": "auth.login",
+          "result": "failure"
+        },
+        "malicious": false
+      },
+      {
+        "id": "l16",
+        "cells": {
+          "time": "13:05:19",
+          "user": "oribe",
+          "source": "192.168.10.44",
+          "event": "auth.login",
+          "result": "success"
+        },
+        "malicious": false
+      }
+    ],
+    "question": {
+      "id": "q-log-spray-shape",
+      "type": "single",
+      "prompt": "Five different usernames, one failed login each, within eight seconds, all from one external address. What is this pattern called?",
+      "explanation": "A password spray tries one or a few common passwords across many accounts, rather than many passwords against one account. It is chosen precisely because per-account lockout thresholds do not trigger: each account sees only a single failure. Credential stuffing is the related technique that replays username and password pairs stolen from another breach.",
+      "difficulty": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "Password spraying",
+          "why": "Correct. One password, many accounts, which stays under per-account lockout thresholds."
+        },
+        {
+          "id": "b",
+          "text": "Brute force against one account",
+          "why": "A brute force hammers a single account with many passwords, and would trip lockout quickly."
+        },
+        {
+          "id": "c",
+          "text": "Credential stuffing",
+          "why": "Close, but stuffing replays username and password pairs stolen elsewhere, rather than trying one password across accounts."
+        },
+        {
+          "id": "d",
+          "text": "A denial of service attempt",
+          "why": "Nothing here is trying to exhaust a resource or deny availability."
+        }
+      ],
+      "answer": "a",
+      "tags": {
+        "objectives": [
+          "SP.2.4",
+          "SP.4.9"
+        ],
+        "csf": [
+          "DE.AE",
+          "DE.CM"
+        ],
+        "frameworks": []
+      },
+      "sources": []
+    },
+    "tags": {
+      "objectives": [
+        "SP.2.4",
+        "SP.4.9"
+      ],
+      "csf": [
+        "DE.AE",
+        "DE.CM"
+      ],
+      "frameworks": []
+    },
+    "sources": []
+  }
+]

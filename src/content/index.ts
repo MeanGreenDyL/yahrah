@@ -46,10 +46,20 @@ export const CSF_CATEGORIES = CSF.functions.flatMap((fn) =>
 
 export const CSF_CATEGORY_BY_ID = new Map(CSF_CATEGORIES.map((c) => [c.id, c]))
 
-/** True when the spine has not been checked against a primary source. */
+/**
+ * True until BOTH spines have been read from the primary document itself.
+ * "Corroborated against the publisher's own site" is good, but it still
+ * leaves exact wording unconfirmed, and the dashboard says so.
+ */
 export const CURRICULUM_NEEDS_REVIEW =
-  SECURITY_PLUS.verification.status === 'unverified-primary-source' ||
-  CSF.verification.status === 'unverified-primary-source'
+  SECURITY_PLUS.verification.status !== 'verified-primary-source' ||
+  CSF.verification.status !== 'verified-primary-source'
+
+/** How each spine is currently sourced, for the dashboard to report. */
+export const CURRICULUM_VERIFICATION = {
+  securityPlus: SECURITY_PLUS.verification,
+  csf: CSF.verification,
+}
 
 // ---------------------------------------------------------------------------
 // Game content
@@ -57,7 +67,20 @@ export const CURRICULUM_NEEDS_REVIEW =
 
 import creaturesRaw from '../../content/creatures/hakumura.json'
 import questionsRaw from '../../content/questions/hakumura.json'
-import { creatureSchema, questionSchema } from './schemas'
+import terminalLabRaw from '../../content/labs/hakumura-terminal.json'
+import logsLabRaw from '../../content/labs/hakumura-logs.json'
+import phishingLabRaw from '../../content/labs/hakumura-phishing.json'
+import lessonsRaw from '../../content/lessons/hakumura.json'
+import bossesRaw from '../../content/bosses/hakumura.json'
+import zonesRaw from '../../content/zones/hakumura.json'
+import {
+  bossSchema,
+  creatureSchema,
+  labSchema,
+  lessonSchema,
+  questionSchema,
+  zoneSchema,
+} from './schemas'
 import { z } from 'zod'
 
 function parseAll<T extends z.ZodTypeAny>(raw: unknown, schema: T, label: string): z.infer<T>[] {
@@ -74,6 +97,22 @@ export const CREATURE_BY_ID = new Map(CREATURES.map((c) => [c.id, c]))
 
 export const QUESTIONS = parseAll(questionsRaw, questionSchema, 'Question')
 export const QUESTION_BY_ID = new Map(QUESTIONS.map((q) => [q.id, q]))
+
+export const LABS = [
+  ...parseAll(terminalLabRaw, labSchema, 'Terminal lab'),
+  ...parseAll(logsLabRaw, labSchema, 'Logs lab'),
+  ...parseAll(phishingLabRaw, labSchema, 'Phishing lab'),
+]
+export const LAB_BY_ID = new Map(LABS.map((l) => [l.id, l]))
+
+export const LESSONS = parseAll(lessonsRaw, lessonSchema, 'Lesson')
+export const LESSON_BY_ID = new Map(LESSONS.map((l) => [l.id, l]))
+
+export const BOSSES = parseAll(bossesRaw, bossSchema, 'Boss')
+export const BOSS_BY_ID = new Map(BOSSES.map((b) => [b.id, b]))
+
+export const ZONES = parseAll(zonesRaw, zoneSchema, 'Zone')
+export const ZONE_BY_ID = new Map(ZONES.map((z) => [z.id, z]))
 
 export const KAGEMONO = CREATURES.filter((c) => c.kind === 'kagemono')
 export const MAMORI = CREATURES.filter((c) => c.kind === 'mamori')

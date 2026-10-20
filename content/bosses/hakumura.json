@@ -1,0 +1,33 @@
+[
+  {
+    "id": "boss-hollowgate",
+    "name": "Hollowgate",
+    "intro": "Something has been standing at the gatehouse door all week, wearing the shape of a thing you are meant to trust. It has read the handover notes. It knows the rota. It is still not Sagae.",
+    "creatureId": "kagemono-lurebright",
+    "questionIds": [
+      "q-control-category-physical",
+      "q-cia-availability",
+      "q-aaa-accounting",
+      "q-zero-trust-assumption",
+      "q-change-backout",
+      "q-hashing-vs-encryption",
+      "q-digital-signature-property",
+      "q-compensating-control"
+    ],
+    "xp": 260,
+    "tags": {
+      "objectives": [
+        "SP.1.1",
+        "SP.1.2",
+        "SP.1.3",
+        "SP.1.4"
+      ],
+      "csf": [
+        "PR.AA",
+        "PR.DS",
+        "GV.PO"
+      ],
+      "frameworks": []
+    }
+  }
+]
