@@ -1,0 +1,380 @@
+[
+  {
+    "id": "kagemono-lurebright",
+    "kind": "kagemono",
+    "name": "Lurebright",
+    "realWorld": "Phishing",
+    "explanation": "A message built to look trustworthy so you will click, open or hand something over. Phishing is social engineering delivered by email, text or voice, and it remains one of the most common ways an attacker gets their first foothold.",
+    "element": "ember",
+    "rarity": "common",
+    "stats": {
+      "guile": 78,
+      "reach": 84,
+      "resolve": 30
+    },
+    "weakness": "mamori-vigil",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "e": "#e8c35a",
+        "w": "#f6e6c0",
+        "o": "#e8884a",
+        "k": "#2a1a10"
+      },
+      "rows": [
+        "................",
+        ".......ee.......",
+        "......eeee......",
+        ".....eewwee.....",
+        ".....eewwee.....",
+        "......eeee......",
+        ".......ee.......",
+        ".......ok.......",
+        "......okko......",
+        ".....okkkko.....",
+        "....okkkkkko....",
+        "....okk..kko....",
+        "....ok....ko....",
+        ".....o....o.....",
+        "................",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.2.2"
+      ],
+      "csf": [
+        "PR.AT",
+        "DE.CM"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "kagemono-grayfang",
+    "kind": "kagemono",
+    "name": "Grayfang",
+    "realWorld": "Trojan horse malware",
+    "explanation": "Software that presents itself as something useful while carrying a hidden payload. A trojan relies on the user choosing to run it, which is why it is usually paired with social engineering rather than an exploit.",
+    "element": "shade",
+    "rarity": "common",
+    "stats": {
+      "guile": 72,
+      "reach": 55,
+      "resolve": 48
+    },
+    "weakness": "mamori-seal",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "s": "#4a4a5a",
+        "k": "#1a1a24",
+        "r": "#e8615a",
+        "w": "#e8e4d8"
+      },
+      "rows": [
+        "................",
+        "..k..........k..",
+        "..kk........kk..",
+        "..ksk......ksk..",
+        "..kssk....kssk..",
+        "..ksssk..ksssk..",
+        "...kssssssssk...",
+        "..kssssssssssk..",
+        "..ksrssssssrsk..",
+        "..kssssssssssk..",
+        "...kssssssssk...",
+        "...kswwsswwsk...",
+        "....kssssssk....",
+        ".....kssssk.....",
+        "......kkkk......",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.2.4"
+      ],
+      "csf": [
+        "DE.CM",
+        "PR.PS"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "kagemono-dustveil",
+    "kind": "kagemono",
+    "name": "Dustveil",
+    "realWorld": "Unpatched software vulnerability",
+    "explanation": "A known flaw left unfixed because nobody applied the update. Most successful intrusions use a vulnerability that already had a patch available, which is why patch management is a security control and not merely housekeeping.",
+    "element": "iron",
+    "rarity": "uncommon",
+    "stats": {
+      "guile": 40,
+      "reach": 70,
+      "resolve": 66
+    },
+    "weakness": "mamori-seal",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "v": "#7a6a8a",
+        "k": "#2a2434",
+        "y": "#e8c35a"
+      },
+      "rows": [
+        "................",
+        ".....vvvvvv.....",
+        "....vvvvvvvv....",
+        "...vvkvvvvkvv...",
+        "...vvkvvvvkvv...",
+        "...vvvvvvvvvv...",
+        "...vvvvvvvvvv...",
+        "...vvvyyyyvvv...",
+        "...vvvvvvvvvv...",
+        "...vvvvvvvvvv...",
+        "...vvvvvvvvvv...",
+        "...vvvvvvvvvv...",
+        "...vv.vv.vv.v...",
+        "...v..v..v...v..",
+        "................",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.2.3",
+        "SP.4.3"
+      ],
+      "csf": [
+        "ID.RA",
+        "PR.PS"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "mamori-vigil",
+    "kind": "mamori",
+    "name": "Vigil",
+    "realWorld": "Security awareness training",
+    "explanation": "Teaching people to recognise and report manipulation. It is a managerial and operational control rather than a technical one: it changes what humans do, which is exactly the surface social engineering attacks.",
+    "element": "signal",
+    "rarity": "common",
+    "stats": {
+      "guile": 30,
+      "reach": 60,
+      "resolve": 80
+    },
+    "weakness": "kagemono-dustveil",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "b": "#5aa9e8",
+        "d": "#2a5a8a",
+        "w": "#e8e4d8",
+        "y": "#e8c35a"
+      },
+      "rows": [
+        "................",
+        "......wwww......",
+        ".....wbbbbw.....",
+        "....wbbbbbbw....",
+        "....wbddddbw....",
+        "....wbdyydbw....",
+        "....wbdyydbw....",
+        "....wbddddbw....",
+        "....wbbbbbbw....",
+        "....wbbbbbbw....",
+        ".....wbbbbw.....",
+        ".....wbbbbw.....",
+        "......wbbw......",
+        "......wbbw......",
+        ".......ww.......",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.1.1",
+        "SP.5.6"
+      ],
+      "csf": [
+        "PR.AT"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "mamori-seal",
+    "kind": "mamori",
+    "name": "Seal of Keeping",
+    "realWorld": "Multifactor authentication",
+    "explanation": "Requiring more than one kind of proof before granting access: something you know, something you have, something you are. It blunts stolen credentials, because a password alone is no longer enough to get in.",
+    "element": "writ",
+    "rarity": "uncommon",
+    "stats": {
+      "guile": 25,
+      "reach": 50,
+      "resolve": 92
+    },
+    "weakness": "kagemono-lurebright",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "g": "#7bd88f",
+        "d": "#2a5a3a",
+        "w": "#e8e4d8",
+        "k": "#1a2a1e"
+      },
+      "rows": [
+        "................",
+        "....wwwwwwww....",
+        "...wgggggggw....",
+        "...wgdddddgw....",
+        "...wgdwwwdgw....",
+        "...wgdwkwdgw....",
+        "...wgdwwwdgw....",
+        "...wgdddddgw....",
+        "...wgggggggw....",
+        "...wgggggggw....",
+        "....wwwwwwww....",
+        ".....w....w.....",
+        ".....w....w.....",
+        ".....ww..ww.....",
+        "......wwww......",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.1.2",
+        "SP.4.6"
+      ],
+      "csf": [
+        "PR.AA"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "mamori-ledger",
+    "kind": "mamori",
+    "name": "The Standing Ledger",
+    "realWorld": "Change management process",
+    "explanation": "An agreed procedure for approving, recording and backing out changes. It matters to security because most outages and many weaknesses are introduced by undocumented changes nobody can trace or reverse.",
+    "element": "mind",
+    "rarity": "uncommon",
+    "stats": {
+      "guile": 20,
+      "reach": 45,
+      "resolve": 88
+    },
+    "weakness": "kagemono-grayfang",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "p": "#b07ae8",
+        "d": "#4a2a6a",
+        "w": "#e8e4d8",
+        "y": "#e8c35a"
+      },
+      "rows": [
+        "................",
+        "...wwwwwwwwww...",
+        "...wppppppppw...",
+        "...wpdddddddw...",
+        "...wpdwwwwwdw...",
+        "...wpdwyyywdw...",
+        "...wpdwwwwwdw...",
+        "...wpdwyyywdw...",
+        "...wpdwwwwwdw...",
+        "...wpdddddddw...",
+        "...wppppppppw...",
+        "...wppppppppw...",
+        "...wwwwwwwwww...",
+        "....w......w....",
+        "....w......w....",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.1.3"
+      ],
+      "csf": [
+        "GV.PO",
+        "PR.PS"
+      ],
+      "frameworks": []
+    }
+  },
+  {
+    "id": "dougu-nmap",
+    "kind": "dougu",
+    "name": "Nmap",
+    "realWorld": "Nmap, the network mapper",
+    "explanation": "An open-source scanner used to discover hosts on a network and find which services are listening on which ports. Defenders use it to inventory what they actually expose; testers use it as the first step of enumeration.",
+    "element": "signal",
+    "rarity": "rare",
+    "stats": {
+      "guile": 60,
+      "reach": 95,
+      "resolve": 40
+    },
+    "weakness": "kagemono-dustveil",
+    "sprite": {
+      "width": 16,
+      "height": 16,
+      "palette": {
+        "c": "#5ad8c8",
+        "d": "#1f4a52",
+        "w": "#e8e4d8",
+        "y": "#e8c35a"
+      },
+      "rows": [
+        "................",
+        "..wwwwwwwwwwww..",
+        "..wddddddddddw..",
+        "..wdcc.cc.ccdw..",
+        "..wd.c...c..dw..",
+        "..wdcc.cc.ccdw..",
+        "..wd...c....dw..",
+        "..wdcc.cc.ccdw..",
+        "..wddddddddddw..",
+        "..wdyy.yy.yydw..",
+        "..wd........dw..",
+        "..wddddddddddw..",
+        "..wwwwwwwwwwww..",
+        ".....w....w.....",
+        ".....w....w.....",
+        "................"
+      ]
+    },
+    "tags": {
+      "objectives": [
+        "SP.4.3",
+        "SP.2.3"
+      ],
+      "csf": [
+        "ID.AM",
+        "ID.RA"
+      ],
+      "frameworks": []
+    },
+    "sources": [
+      {
+        "title": "Nmap official site",
+        "url": "https://nmap.org/"
+      }
+    ]
+  }
+]

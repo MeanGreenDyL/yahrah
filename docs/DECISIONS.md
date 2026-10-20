@@ -140,3 +140,41 @@ Each badge is a pure function of the save rather than a flag written at the mome
 is earned. Awarding is therefore idempotent, the stored list can never drift from what
 the player has actually done, and a badge added later is granted retroactively to
 anyone who already qualifies.
+
+## D17 — Answer choices are shuffled, seeded by question id
+
+Authored content naturally lists the correct answer first, and a screenshot of the
+battle screen made it obvious: every question's right answer sat at the top. A player
+would stop reading within minutes.
+
+Choices are now shuffled with a seeded Fisher-Yates, keyed on the question id. Seeded
+rather than random so the order is stable while a question is on screen and
+reproducible in tests; keyed on the question so the answer's position varies across
+questions. Both a unit test and an e2e test assert the correct answer is not always
+first.
+
+The e2e suite now resolves the right answer by reading the content file and matching on
+the prompt shown, rather than clicking a position.
+
+## D18 — "Missed concepts return" is the scheduler's job, not the battle's
+
+The brief asks that missed concepts come back as wild encounters. Two mechanisms
+exist, and it is worth being precise about which one actually delivers it.
+
+The battle re-queues a missed question so an encounter cannot end on something you
+never got right — but that only fires when the question queue runs out before the
+encounter resolves, which is not the common case. Writing the e2e test exposed this:
+five wrong answers at 20 damage each defeats the player exactly as the queue empties,
+so the re-queue never ran.
+
+The mechanism that genuinely delivers the promise is the scheduler: a lapsed card is
+due the *same day*, so it leads the next session. That is now tested end to end,
+through a page reload, along with the converse — a question answered correctly does
+not come back immediately.
+
+## D19 — The review interval is capped
+
+A long run of "easy" grades compounds the interval until the date arithmetic overflows
+and throws, which a save file carrying that interval would then do on every load. The
+interval is capped at five years, far beyond any exam horizon. Found by a test that
+drilled 30 consecutive easy reviews.

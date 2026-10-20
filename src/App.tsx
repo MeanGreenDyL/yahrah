@@ -7,6 +7,7 @@ import { SettingsScreen } from '@/screens/SettingsScreen'
 import { CodexScreen } from '@/screens/CodexScreen'
 import { OverworldScreen } from '@/screens/OverworldScreen'
 import { DashboardScreen } from '@/screens/DashboardScreen'
+import { BattleScreen } from '@/screens/BattleScreen'
 import { Button } from '@/ui/Button'
 import { Panel } from '@/ui/Panel'
 
@@ -65,6 +66,7 @@ export function App() {
       {screen === 'codex' && <CodexScreen />}
       {screen === 'overworld' && <OverworldScreen />}
       {screen === 'dashboard' && <DashboardScreen />}
+      {screen === 'battle' && <BattleScreen />}
     </main>
   )
 }

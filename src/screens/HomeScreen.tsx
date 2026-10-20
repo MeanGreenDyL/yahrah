@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useState } from 'react'
 import { useGame } from '@/state/store'
 import { Panel } from '@/ui/Panel'
 import { Meter } from '@/ui/Meter'
@@ -8,7 +9,8 @@ import { VILLAGES, rankForLevel } from '@/world'
 import { xpIntoLevel, xpForNextLevel } from '@/engine/progression'
 
 export function HomeScreen() {
-  const { save, go, markPlayedToday } = useGame()
+  const { save, go, markPlayedToday, beginDailySession } = useGame()
+  const [nothingDue, setNothingDue] = useState(false)
   const rank = rankForLevel(save.profile.level)
 
   // Opening the home screen counts as showing up today.
@@ -53,8 +55,26 @@ export function HomeScreen() {
         />
       </Panel>
 
+      <Button
+        full
+        onClick={() => {
+          const started = beginDailySession()
+          if (!started) setNothingDue(true)
+        }}
+      >
+        Today's training
+      </Button>
+      {nothingDue && (
+        <p className="notice notice-good">
+          Nothing is due today — everything you have studied is still fresh. Travel to a village
+          for new ground.
+        </p>
+      )}
+
       <div className="button-row">
-        <Button onClick={() => go('overworld')}>Travel</Button>
+        <Button variant="ghost" onClick={() => go('overworld')}>
+          Travel
+        </Button>
         <Button variant="ghost" onClick={() => go('dashboard')}>
           Progress
         </Button>

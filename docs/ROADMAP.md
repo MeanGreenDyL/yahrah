@@ -17,10 +17,13 @@
   dashboard with mastery per Security+ domain and per CSF 2.0 Function, weak-area
   ranking, syllabus coverage, a weighted exam-readiness score, and eight badges.
 
+- **M3 — Battle engine and spaced repetition.** Turn-based Kagemono encounters with a
+  seven-element effectiveness cycle, an SM-2 scheduler with capped intervals, a daily
+  session built from due cards topped up with unseen questions, shuffled answer
+  choices, and an explanation after every answer covering every choice. Ten Security+
+  questions and seven creatures as the first real content.
+
 ## Next
-- **M3 — Battle engine and spaced repetition.** Turn-based Kagemono encounters with
-  Mamori loadouts and type effectiveness, SM-2-style scheduler, missed concepts
-  returning as wild encounters, explanations after every answer.
 - **M4 — Lab engines.** Simulated terminal (fake filesystem and network, command
   parser, scanning output, privilege-escalation puzzle), SIEM-style log analysis,
   phishing triage.

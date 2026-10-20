@@ -90,7 +90,7 @@ responsible disclosure.
 
 ## Status
 
-**M0, M1 and M2 complete.** Scaffold, curriculum spine, content validator and CI;
+**M0 through M3 complete.** Scaffold, curriculum spine, content validator and CI;
 pixel UI kit, chiptune audio, PWA, and a save system with export/import and
 migrations; overworld, progress dashboard and badges.
 
@@ -98,6 +98,11 @@ Playable now: title screen, the Three Vows, home with XP and streak, a walkable
 overworld with seven village gates, a progress dashboard (mastery by Security+ domain
 and by CSF 2.0 Function, weak areas, exam readiness), badges, settings and the Codex.
 
-Lessons, battles and labs arrive in M3-M5.
+Battles work: "Today's training" builds a session from whatever is due for review,
+topped up with questions you have not seen, and every answer is explained — including
+why each wrong choice is wrong. Missed concepts become due the same day and lead your
+next session.
+
+Lab engines and the first full village arrive in M4-M5.
 
 See [`docs/ROADMAP.md`](docs/ROADMAP.md).

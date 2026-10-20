@@ -807,3 +807,86 @@ code {
 .badge-earned .badge-mark {
   color: var(--warn);
 }
+
+/* --- battle --------------------------------------------------------------- */
+
+.foe {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.foe-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.foe-info .screen-title {
+  font-size: calc(0.8rem * var(--text-scale));
+  margin-bottom: 0.3rem;
+}
+
+.question-prompt {
+  margin: 0;
+  font-size: calc(1rem * var(--text-scale));
+  line-height: 1.6;
+  color: var(--paper);
+}
+
+.choices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: calc(0.95rem * var(--text-scale));
+  line-height: 1.5;
+  color: var(--paper);
+  background: var(--ink-2);
+  border: 2px solid var(--edge);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.choice:hover,
+.choice:focus-visible {
+  border-color: var(--warn);
+  background: var(--panel-2);
+}
+
+.choice-review {
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--edge);
+}
+
+.choice-review strong {
+  display: block;
+  color: var(--paper-dim);
+  font-weight: 400;
+}
+
+.choice-right {
+  border-left-color: var(--good);
+}
+
+.choice-right strong {
+  color: var(--good);
+}
+
+.choice-chosen {
+  border-left-color: var(--bad);
+}
+
+.choice-chosen strong {
+  color: var(--bad);
+}
